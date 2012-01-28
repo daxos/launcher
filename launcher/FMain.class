@@ -1,0 +1,1016 @@
+' Gambas class file
+
+
+PUBLIC SUB Form_Open()
+
+'Cadenas que contendrá los valores a cargar
+
+DIM value AS String
+DIM value3 AS String
+DIM colorpan AS String
+DIM colorfuente AS String
+DIM colormain AS String
+DIM delim AS String
+DIM elemento AS Integer
+DIM nombre AS String
+DIM segundon AS String
+DIM tercern AS String
+
+'---------Fin---------------
+
+ME.center
+Timer1.Enabled = TRUE
+Form.Mask = FALSE
+ME.Y = 240
+SHELL "mocp" 
+
+'Tools Tips
+
+ToolButton23.ToolTip = "Anterior"
+ToolButton24.ToolTip = "Play"
+pause.ToolTip = "Pause"
+unpaused.ToolTip = "Play"
+ToolButton27.tooltip = "Siguiente"
+DaxOSUpdate.ToolTip = "Gestor de Actualizaciones"
+firefox.ToolTip = "Navegador Web Firefox"
+setting.ToolTip = "Ajustes"
+inicio.ToolTip = "Home"
+
+'-------------------Fin----------------------
+
+'-----------------Valores Grid----------------------
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+GridView2.Rows.Height = 35
+'GridView1.Picture[0, 0] = Picture.load("gmail.png")
+
+'-------------------Fin-----------------------------
+
+'Valor de colores a cargar 
+delim = "="
+
+SHELL "cat ~/.launcher/.fuente | cut -c 11-20| cut -d " & delim & " -f1" TO colorfuente
+SHELL "cat ~/.launcher/.color1 | cut -c 11-20| cut -d " & delim & " -f1" TO colormain
+SHELL "cat ~/.launcher/.color2 | cut -c 11-20| cut -d " & delim & " -f1" TO colorpan
+
+principal.ForeColor = colorfuente
+Panel2.ForeColor = colorfuente
+buscar.ForeColor = colorfuente
+principal.backcolor = colormain
+slider2.BackColor = colormain
+buscar.backcolor = colormain
+Panel2.backColor = colorpan
+Separator1.backColor = colorpan
+
+'------------Fin----------
+
+'Aquí están los valores de los SLiders
+
+SHELL "cat ~/.launcher/.levelsound | cut  -c 15" TO value
+SHELL "cat ~/.launcher/.brillo | cut  -c 15" TO value3
+
+Slider1.MaxValue = 10
+Slider1.MinValue = 0
+Slider1.value = value
+
+Slider2.MaxValue = 11
+Slider2.minvalue = 0
+Slider2.value = value3
+
+'Aplicaciones favoritos
+
+SHELL "cat ~/.launcher/.config | grep ^nombre= | cut -d= -f2" TO nombre
+SHELL "cat ~/.launcher/.config | grep ^segundon= | cut -d= -f2" TO segundon
+SHELL "cat ~/.launcher/.config | grep ^tercern= | cut -d= -f2" TO tercern
+
+Label12.text = nombre
+Label14.Text = segundon
+Label24.text = tercern
+firefox.Picture = Picture.Load("~/.launcher/icono1.png")
+DaxOSUpdate.Picture = Picture.Load("~/.launcher/icono2.png")
+ToolButton22.Picture = Picture.Load("~/.launcher/icono3.png")
+
+'Papelera
+
+SHELL "ls ~/.local/share/Trash/files |  wc -l" TO elemento
+
+Papelera.ToolTip = elemento & " Elementos"
+
+IF elemento < 1 THEN 
+Papelera.Picture = Picture.Load("user-trash.png")
+ELSE
+Papelera.Picture = Picture.Load("papelera.png")
+
+ENDIF
+
+'Bateria
+
+'TrayIcon1.Picture = Picture.Load("battery.png")
+'TrayIcon1.Tooltip = "100% de carga"
+
+END
+
+'Reloj de la parte superior del menú
+
+PUBLIC SUB Timer1_Timer()
+
+Timer1.Delay = 1000
+
+cmdreloj.Text = Time(Hour(Now), Minute(Now), Second(Now))
+dia.text = Format$(Now, "ddd ")
+
+END
+
+PUBLIC SUB Panel1_MouseDown()
+
+
+END
+
+'Botón de cerrar el menu
+
+PUBLIC SUB ToolButton9_Click()
+
+
+ME.close
+
+END
+
+'Lanzador de firefox en la parte de favoritos
+
+PUBLIC SUB Firefox_Click()
+
+DIM ejecutar AS String
+
+SHELL "cat ~/.launcher/.config | grep ^exec= | cut -d= -f2" TO ejecutar
+SHELL "" & ejecutar
+
+END
+
+'Lanzador del gestor de actualizaciones en la parte de favoritos
+
+PUBLIC SUB DaxOSUpdate_Click()
+
+DIM ejecutar AS String
+
+SHELL "cat ~/.launcher/.config | grep ^segundoe= | cut -d= -f2" TO ejecutar
+SHELL "" & ejecutar
+ 
+
+END
+
+'A continuación los distintos accesos a las carpetas del sistema
+
+PUBLIC SUB Descargas_Click()
+
+SHELL "thunar ~/Descargas"
+
+END
+
+PUBLIC SUB Musica_Click()
+
+SHELL "thunar ~/Música"
+
+END
+
+PUBLIC SUB Videos_Click()
+
+SHELL "thunar ~/Vídeos"
+
+END
+
+PUBLIC SUB Imagenes_Click()
+
+SHELL "thunar ~/Imágenes"
+
+END
+
+PUBLIC SUB Escritorio_Click()
+
+SHELL "thunar ~/Escritorio"
+
+END
+
+PUBLIC SUB Papelera_Click()
+
+SHELL "thunar trash:"
+
+END
+
+PUBLIC SUB Papelera_Menu()
+  
+menu
+
+  
+END
+
+
+PUBLIC SUB Home_Click()
+
+SHELL "thunar /home"
+
+END
+
+PUBLIC SUB Raiz_Click()
+
+SHELL "thunar /"
+
+END
+
+PUBLIC SUB ToolButton22_Click()
+
+DIM ejecutar AS String
+
+SHELL "cat ~/.launcher/.config | grep ^tercere= | cut -d= -f2" TO ejecutar
+SHELL "" & ejecutar
+
+END
+
+
+'Controles de la música
+
+'Reproduce la música
+
+PUBLIC SUB ToolButton24_Click()
+
+
+SHELL "mocp -m -a $HOME/Música -p"
+
+END
+
+'Reproduce la próxima canción
+
+PUBLIC SUB ToolButton23_Click()
+
+SHELL "mocp -m $HOME/Música -r"
+
+END
+
+'Reproduce la canción anterior
+
+PUBLIC SUB ToolButton25_Click()
+
+SHELL "mocp -m $HOME/Música -f"
+
+
+END
+
+'Pausar la música
+
+PUBLIC SUB pause_Click()
+
+SHELL "mocp -m $HOME/Música -P" 
+
+unpaused.Show
+pause.Visible = FALSE
+
+END
+
+'Despausar la música
+
+PUBLIC SUB unpaused_Click()
+
+SHELL "mocp -m $HOME/Música -U" 
+
+pause.Show
+unpaused.visible = FALSE
+
+END
+
+PUBLIC SUB ToolButton27_Click()
+
+SHELL "mocp -m $HOME/Música -f"
+
+
+END
+
+'--------------------------Fin de controles de música-------------------------
+
+'Slider del sonido
+
+PUBLIC SUB Slider1_Change()
+
+DIM valor2 AS String
+DIM ejecutar AS String
+DIM valor AS String
+
+ valor = Slider1.value * 3
+ SHELL "amixer sset PCM " & valor
+
+Slider1.ToolTip = "Volumen " & Slider1.Value
+valor2 = "slider1.value=" & Slider1.Value 
+SHELL "sed -ie 's/slider1.value/" & valor2 & "/g' ~/.launcher/.levelsound"
+
+END
+
+PUBLIC SUB Accesorios_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+accesoriosmod.leer(fmain.GridView2, titulos)
+
+
+END
+
+'Caja de busqueda
+
+PUBLIC SUB TextBox1_keypress()
+
+principal.visible = FALSE
+buscar.visible = TRUE
+
+END
+
+PUBLIC SUB ToolButton26_Click()
+
+Slider2.show
+
+END
+
+'SLider del gamma (brillo)
+
+PUBLIC SUB Slider2_Change()
+
+DIM valor AS String
+DIM valor2 AS String
+
+ slider2.ToolTip = slider2.value
+ valor = Slider2.value * 0.100
+ valor2 = "slider2.value=" & Slider2.Value 
+ 
+SHELL "xgamma -gamma " & valor
+SHELL "sed -ie 's/slider2.value/" & valor2 & "/g' ~/.launcher/.brillo"
+
+
+END
+
+' Todo el sistema de busqueda y ejecución de aplicaciones
+
+'Busca en youtube
+
+PUBLIC SUB youtube_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL "firefox http://www.youtube.com/results?search_query=" & busqueda
+
+END
+
+'Busca en wikipedia
+
+PUBLIC SUB wikipedia_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL "firefox http://es.wikipedia.org/wiki/" & busqueda
+ 
+END
+
+'Ejecuta la aplicación
+
+PUBLIC SUB busqueda_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL busqueda
+
+
+END
+
+'Busca en google
+
+PUBLIC SUB google_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL "firefox http://www.google.es/search?q=" & busqueda
+
+END
+
+'Busca música en la web musicuo
+
+PUBLIC SUB musicuo_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL "firefox http://www.musicuo.com/#/search/q:" & busqueda
+
+END
+
+PUBLIC SUB ToolButton17_Click()
+
+buscar.visible = FALSE
+
+END
+
+'Ejecuta la aplicación escrita en el textbox1
+
+PUBLIC SUB launcher_Click()
+
+DIM busqueda AS String
+ busqueda = TextBox1.text 
+ SHELL busqueda
+
+END
+'--------------------------Fin---------------------------------------------------------
+
+'Lo siguiente es para poder personalizar el launcher
+
+PUBLIC SUB selecolor_Click()
+
+color1.Visible = TRUE
+principal.visible = TRUE
+cpanel2.show
+cdicolor.show
+selecolor.Visible = FALSE
+Cpanel.Visible = TRUE
+fuente.show
+
+END
+
+PUBLIC SUB fuente_Click()
+
+DIM valor AS String
+
+principal.ForeColor = color1.SelectedColor
+Panel2.ForeColor = color1.SelectedColor
+buscar.ForeColor = color1.SelectedColor
+
+valor = "forecolor=" & principal.ForeColor
+SHELL "sed -ie 's/forecolor/" & valor & "/g' ~/.launcher/.fuente"
+
+END
+
+PUBLIC SUB Cpanel_Click()
+
+DIM valor AS String
+
+Panel2.BackColor = color1.SelectedColor
+Separator1.BackColor = color1.SelectedColor
+
+valor = "backcolor=" & panel2.backcolor
+SHELL "sed -ie 's/backcolor/" & valor & "/g' ~/.launcher/.color2"
+
+
+END
+
+PUBLIC SUB Panel_active()
+
+Panel.backcolor = color1
+
+END
+
+
+PUBLIC SUB cpanel2_Click()
+
+DIM valor AS String
+DIM color AS String
+color = color1.SelectedColor
+principal.backcolor = color
+slider2.BackColor = color
+buscar.backcolor = color
+
+valor = "backcolor=" & principal.backcolor
+SHELL "sed -ie 's/backcolor/" & valor & "/g' ~/.launcher/.color1"
+
+END
+
+PUBLIC SUB cdicolor_Click()
+
+color1.Visible = FALSE
+cpanel2.Visible = FALSE
+selecolor.Show
+cdicolor.Visible = FALSE
+fuente.Visible = FALSE
+Cpanel.Visible = FALSE
+
+END
+
+'---------------------------------------Fin---------------------------------------------
+
+PUBLIC SUB FileView1_Activate()
+
+FileView1.Icon = Picture.Load("correo.png")
+
+END
+
+'Configuramos el visor de archivos para que muestre todas las aplicaciones
+'Por último que las ejecutes al hacer click sobre ellas
+
+PUBLIC SUB FileView1_Click()
+
+DIM ejecutar AS String
+DIM aplication AS String
+DIM delim AS String
+DIM icono AS String
+DIM comment AS String
+
+delim = "%"
+aplication = FileView1.current
+FileView1.tooltip = comment
+
+ SHELL "cat /usr/share/applications/" & aplication & "| grep ^Comment= | cut -d= -f2" TO comment
+ SHELL "cat /usr/share/applications/" & aplication & "| grep ^Icon= | cut -d= -f2" TO icono
+ SHELL "cat /usr/share/applications/" & aplication & "| grep ^Exec= | cut -d= -f2 | cut -d " & delim & " -f 1 | sed 2d " TO ejecutar
+ SHELL ejecutar 
+ 
+END
+
+'Muestra todas las aplicaciones instaladas
+
+PUBLIC SUB ToolButton13_Click()
+
+DIM titulos AS Boolean
+
+GridView1.show
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView1.Header = 1
+titulos = -1
+ELSE
+FMain.GridView1.Header = 0
+titulos = 0
+ENDIF
+GridView1.Visible = TRUE
+
+GridView1.rows.count = 0
+GridView1.Columns.count = 0
+
+GridView1.rows.count = 300
+GridView1.Columns.count = 1
+appsmod.leer(fmain.GridView1, titulos)
+
+END
+
+'Botón inicio, regresa a la pantalla inicial al pulsarlo
+
+PUBLIC SUB inicio_Click()
+
+  principal.visible = TRUE
+  Panel5.Visible = FALSE
+  TextBox1.text = "Buscar"
+  FileView1.filter = ["*.desktop", "aplicaciones"]
+  Papelera.Picture = Picture.load("papelera.png")
+  GridView2.Visible = FALSE
+  GridView1.Visible = FALSE
+  
+END
+'-----------------Fin----------------------
+
+PUBLIC SUB setting_Click()
+
+Panel6.Visible = TRUE
+brillo.visible = TRUE
+setting.visible = FALSE
+settingo.show
+
+END
+
+'----------------Botones Brillo------------------
+
+PUBLIC SUB brillo_Click()
+
+brillo2.visible = TRUE
+slider2.visible = TRUE
+
+END
+
+PUBLIC SUB brillo2_Click()
+
+slider2.Visible = FALSE
+brillo.show
+brillo2.Visible = FALSE
+
+END
+
+'---------------FIN------------------------
+
+PUBLIC SUB settingo_Click()
+
+setting.show
+Panel6.visible = FALSE
+slider2.visible = FALSE
+color1.Visible = FALSE
+fuente.Visible = FALSE
+Cpanel.Visible = FALSE
+cpanel2.Visible = FALSE
+selecolor.visible = TRUE
+esp.Visible = FALSE
+en.Visible = FALSE
+
+END
+
+
+PUBLIC SUB ofimatica_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+office.leer(fmain.GridView2, titulos)
+
+END
+
+PUBLIC SUB About_Click()
+
+Form2.show
+
+END
+
+PUBLIC SUB language_Click()
+
+esp.Show
+en.Show
+language.Visible = FALSE
+language1.Show
+
+END
+
+PUBLIC SUB language1_Click()
+
+esp.Visible = FALSE
+en.Visible = FALSE
+language.Visible = TRUE
+language1.Visible = FALSE
+
+END
+
+'---------------------Traducción ingles-------------------------------------
+
+PUBLIC SUB en_Click()
+
+Label22.text = "Root"
+label17.text = "Bin"
+Label21.text = "Desktop"
+label20.Text = "Photo"
+label18.text = "Music"
+Label6.Text = "Downloads"
+Label32.text = "Colours"
+Label34.Text = "Power"
+fuente.text = "Font"
+Label35.text = "Lang."
+Label23.Text = "Menu"
+TextBox1.text = "Search"
+Label9.text = "Accesories"
+Label10.text = "Sound"
+Label31.text = "Development  "
+Label13.text = "Games"
+Label26.text = "Office"
+Label29.text = "Educational"
+Label25.text = " Graphics"
+Label28.text = "  System"
+Label15.text = " Other"
+Label11.text = "Favourites"
+Label8.Text = "Categories"
+Label30.text = "All Apps"
+
+END
+
+'---------------------------Fin-------------------------------------------
+
+'---------------------Traducción español-------------------------------------
+
+PUBLIC SUB esp_Click()
+
+Label22.text = "Raiz"
+label17.text = "Papelera"
+Label21.text = "Escritorio"
+label20.Text = "Imágenes"
+label18.text = "Música"
+Label6.Text = "Descargas"
+Label32.text = "Colores"
+Label34.Text = "Apagar"
+fuente.text = "Fuente"
+Label35.text = "Idioma"
+Label23.Text = "Menú"
+TextBox1.text = "Buscar"
+Label9.text = "Accesorios"
+Label10.text = "Sonido"
+Label31.text = "Desarrollo"
+Label13.text = "Juegos"
+Label26.text = "  Oficina"
+Label29.text = " Educación"
+Label25.text = "Gráficos"
+Label28.text = " Sistema"
+Label15.text = " Otros"
+Label11.text = "Favoritos"
+Label8.Text = "Categorias"
+
+END
+
+'---------------------------Fin-------------------------------------------
+
+PUBLIC SUB FileView_icon()
+
+FileView1.Icon = Picture.Load("/home/david/apagar.png")
+
+END
+
+PRIVATE FUNCTION Icon_Read() AS Picture
+
+
+END
+
+PRIVATE SUB Icon_Write(Value AS Picture)
+
+END
+
+PUBLIC SUB dia_MouseDown()
+
+DateChooser2.show
+
+END
+
+PUBLIC SUB dia_DblClick()
+
+DateChooser2.visible = FALSE
+
+END
+
+PUBLIC SUB ToolButton1_Click()
+
+Form1.show
+
+END
+
+PUBLIC SUB Button1_Click()
+
+Form3.show
+
+END
+
+PUBLIC SUB favoritos_Click()
+
+Form3.show
+
+END
+
+PUBLIC SUB ToolButton2_MouseDown()
+
+
+END
+
+
+
+PUBLIC SUB correo_Click()
+
+SHELL "~/script.sh"
+
+END
+
+PUBLIC SUB correo_KeyPress()
+
+'Message.Info(Key.Code)
+IF Key.code = 269025049 THEN 
+SHELL "~/.launcher/script.sh"
+ENDIF
+
+END
+
+PUBLIC SUB info_Click()
+
+SHELL "informacion.gambas"
+
+END
+
+PUBLIC SUB GridView2_Click()
+
+DIM ejecutar AS String
+DIM aplication AS String
+DIM delim AS String
+DIM icono AS String
+
+
+delim = "%"
+aplication = GridView2.current.Text
+
+SHELL "cat /usr/share/applications/" & aplication & ".desktop | grep ^Exec= | cut -d= -f2 | cut -d " & delim & " -f 1 | sed 2d " TO ejecutar
+SHELL ejecutar
+
+END
+
+' Aplicaciones divididas en las distintas categorias
+
+PUBLIC SUB Juegos_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+juegosmod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB internet_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+internetmod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB sonido_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+sonidomod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB desarrollo_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+desarrollomod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB graficos_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+graficosmod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB sistema_Click()
+
+DIM titulos AS Boolean
+
+Panel5.show
+principal.Visible = FALSE
+
+IF CheckBox1.value = -1 THEN
+FMain.GridView2.Header = 1
+titulos = -1
+ELSE
+FMain.GridView2.Header = 0
+titulos = 0
+ENDIF
+GridView2.Visible = TRUE
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 1
+sistemamod.leer(fmain.GridView2, titulos)
+
+
+END
+
+PUBLIC SUB GridView1_Click()
+
+DIM ejecutar AS String
+DIM aplication AS String
+DIM delim AS String
+DIM info AS String
+DIM punto AS String
+
+
+delim = ":"
+aplication = GridView1.current.Text
+
+
+
+SHELL "find /usr/share/applications/ -name  *.desktop | xargs grep " & aplication & " | cut -d " & delim & " -f 1 | cut  -c 25-1000 | sed -n 1p" TO info 
+
+'PRINT info
+
+SHELL "cat /usr/share/applications/" & info & " | grep ^Exec= | cut -d= -f2 | cut -d" & delim & " -f 1 | sed 2d " TO ejecutar
+
+
+SHELL ejecutar
+
+END
+
+'-------------------------------Fin----------------------------------
+
+PUBLIC SUB apagar_Click()
+
+SHELL " power.gambas"
+ME.close
+
+END
