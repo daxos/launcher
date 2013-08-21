@@ -1,0 +1,88 @@
+# Gambas Form File 2.0
+
+{ Form Form
+  MoveScaled(0,0,60,27)
+  Background = &HF0F0F0&
+  Text = ("")
+  Icon = Picture["Gnome-Preferences-Desktop-Wallpaper-48.png"]
+  { Separator1 Separator
+    MoveScaled(-1,5,65,1)
+  }
+  { Panel1 Panel
+    MoveScaled(-1,0,66,5)
+    Background = &H303030&
+    Foreground = &HFFFFFF&
+    { Label3 Label
+      MoveScaled(13,1,36,3)
+      Font = Font["+4"]
+      Text = ("Configuraci\xC3\xB3n LockScreen")
+    }
+    { ToolButton3 ToolButton
+      MoveScaled(1,0,5,5)
+      Text = ("")
+      Picture = Picture["home.png"]
+    }
+  }
+  { Label2 Label
+    MoveScaled(11,17,14,3)
+    Text = ("Cambiar fondo")
+  }
+  { ToolButton2 ToolButton
+    MoveScaled(13,9,6.8571,6.8571)
+    Text = ("")
+    Picture = Picture["Gnome-Preferences-Desktop-Wallpaper-48.png"]
+  }
+  { Label1 Label
+    MoveScaled(33,17,24,3)
+    Text = ("A\xC3\xB1adir/Cambiar contrase\xC3\xB1a")
+  }
+  { ToolButton1 ToolButton
+    MoveScaled(40,9,6.8571,6.8571)
+    Text = ("")
+    Picture = Picture["key_48.png"]
+  }
+  { Panel3 Panel
+    MoveScaled(0,23,60,5)
+    Background = &H303030&
+  }
+  { Panel2 Panel
+    MoveScaled(0,6,65,40)
+    Visible = False
+    { FileChooser1 FileChooser
+      MoveScaled(0,0,63,35)
+      Visible = False
+    }
+    { Button1 Button
+      MoveScaled(27,35,16,3)
+      Visible = False
+      Text = ("Seleccionar")
+    }
+    { Panel4 Panel
+      MoveScaled(0,-1,61,38)
+      Visible = False
+      Background = &HF0F0F0&
+      { TextBox1 TextBox
+        MoveScaled(25,3,16,3)
+        Text = ("")
+      }
+      { TextBox2 TextBox
+        MoveScaled(25,9,16,3)
+        Text = ("")
+      }
+      { Label4 Label
+        MoveScaled(7,3,10,3)
+        Font = Font["+3"]
+        Text = ("Usuario")
+      }
+      { Label5 Label
+        MoveScaled(7,9,14,3)
+        Font = Font["+3"]
+        Text = ("Contrase\xC3\xB1a")
+      }
+      { aceptar1 Button
+        MoveScaled(24,18,16,3)
+        Text = ("Aceptar")
+      }
+    }
+  }
+}
