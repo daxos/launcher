@@ -1,0 +1,87 @@
+# Gambas Form File 2.0
+
+{ Form Form
+  MoveScaled(0,0,66,50)
+  Background = &HF0F0F0&
+  Text = ("")
+  { Label1 Label
+    MoveScaled(13,9,11,3)
+    Font = Font["Ubuntu,+4"]
+    Text = ("Nombre")
+  }
+  { Panel1 Panel
+    MoveScaled(0,0,66,7)
+    Background = &H303030&
+    { Label4 Label
+      MoveScaled(1,2,34,3)
+      Font = Font["Ubuntu,+6"]
+      Foreground = &HFFFFFF&
+      Text = ("Configurar Favoritos")
+    }
+  }
+  { Label2 Label
+    MoveScaled(13,18,6,3)
+    Font = Font["Ubuntu,+4"]
+    Text = ("Exec")
+  }
+  { Label3 Label
+    MoveScaled(13,26,10,3)
+    Font = Font["Ubuntu,+4"]
+    Text = ("Icono")
+  }
+  { TextBox1 TextBox
+    MoveScaled(24,9,23,3)
+    Text = ("")
+  }
+  { TextBox2 TextBox
+    MoveScaled(24,18,23,3)
+    Text = ("")
+  }
+  { TextBox3 TextBox
+    MoveScaled(24,26,23,3)
+    Text = ("")
+  }
+  { explorar Button
+    MoveScaled(47,26,9,3)
+    Text = ("Explorar")
+  }
+  { app1 Button
+    MoveScaled(5,34,12,3)
+    Text = ("App 1")
+  }
+  { app2 Button
+    MoveScaled(22,34,12,3)
+    Text = ("App 2")
+  }
+  { app3 Button
+    MoveScaled(39,34,12,3)
+    Text = ("App 3")
+  }
+  { Panel2 Panel
+    MoveScaled(-1,7,67,45)
+    Visible = False
+    Background = &HF0F0F0&
+    { FileChooser1 FileChooser
+      MoveScaled(1,0,66,39)
+      Visible = False
+      Root = "/"
+      ShowDirectory = True
+    }
+    { Button1 Button
+      MoveScaled(50,39,16,3)
+      Text = ("Aceptar")
+    }
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(4,8,6.8571,6.8571)
+    Picture = Picture["user-icon.png"]
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(4,25,6.8571,6.8571)
+    Picture = Picture["marco-user.png"]
+  }
+  { PictureBox3 PictureBox
+    MoveScaled(4,17,6.8571,6.8571)
+    Picture = Picture["utilities-terminal.png"]
+  }
+}
