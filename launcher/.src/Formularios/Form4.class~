@@ -1,0 +1,80 @@
+' Gambas class file
+
+
+Private $hmenu As New Menu(Me)
+Private $hmenuEdit As Menu
+
+Public Sub Form_Open()
+
+Dim titulos As Boolean
+Dim libre As String
+
+Shell "cat /proc/meminfo | grep ^HighFree: | cut -d: -f2" To libre
+
+If CheckBox1.value = -1 Then
+form4.GridView1.Header = 1
+titulos = -1
+Else
+form4.GridView1.Header = 0
+titulos = 0
+Endif
+GridView1.Visible = True
+
+GridView1.rows.count = 0
+GridView1.Columns.count = 2
+
+GridView1.rows.count = 20
+GridView1.Columns.count = 2
+Mod_Categorias.leer_ventanas(form4.GridView1, titulos)
+
+
+Me.center
+
+$hmenuEdit = New Menu($hmenu) As "kill"
+$hmenuEdit.Text = ("Kill") ' texto del menu (item)
+$hmenuEdit.Picture = Picture["icons/gtk-edit.png"] ' icono del item
+'$hmenuEdit.Shortcut = "Ctrl+E" ' atajo de teclado
+
+
+End
+
+Public Sub GridView1_DblClick()
+
+Dim ejecutar As String
+
+ejecutar = GridView1.Current.Text
+
+Shell "wmctrl -a " & ejecutar
+
+GridView1.Refresh
+
+fmain.close
+
+End
+
+Public Sub GridView1_Menu()
+  
+ If gridview1.Rows.Count > 0 Then ' comprobamos si existe alguna fila...
+        $hMenu.Popup()  ' si existe, abrimos el menú mediante su método Popup()
+    Endif
+  
+End
+
+Public Sub kill_Click()
+
+Print "wmctrl -c " & gridview1.Current.Text
+
+End
+
+
+Public Sub Label1_MouseDown()
+
+Form4.Close
+
+End
+
+Public Sub GridView1_Click()
+
+  
+
+End

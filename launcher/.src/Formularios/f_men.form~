@@ -1,0 +1,22 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,35,9)
+  Expand = True
+  Border = False
+  Arrangement = Arrange.Fill
+  { Panel1 Panel
+    MoveScaled(0,1,29,6)
+    Expand = True
+    Arrangement = Arrange.Fill
+    { lbTitle TextLabel
+      MoveScaled(0,0,19.4286,3.7143)
+      Font = Font["8"]
+      Background = &H8C67DC&
+      Foreground = &HFFFFFF&
+      Text = ("PROPERTIES")
+      Alignment = Align.Center
+      Border = Border.Plain
+    }
+  }
+}

@@ -1,0 +1,28 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,9,11)
+  Drop = True
+  Expand = True
+  Border = False
+  SkipTaskbar = True
+  AutoResize = True
+  { GridView1 GridView
+    MoveScaled(0,-1,38,11)
+  }
+  { IconViewindow IconView
+    MoveScaled(0,-1,105,13)
+    Background = &H3F3F3F&
+    Foreground = &HFFFFFF&
+    Drop = True
+    Expand = True
+    Orientation = Arrange.Horizontal
+    Editable = True
+    IconLines = 1
+    Border = False
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(19,3,24,4)
+    Visible = False
+  }
+}

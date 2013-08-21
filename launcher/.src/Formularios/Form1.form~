@@ -1,0 +1,25 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85.7143,114.2857)
+  AutoResize = True
+  { Menu_Principal Menu
+    Text = ("Menu_Principal")
+    Visible = False
+    { Nuevo Menu
+      Text = ("Nuevo")
+      Tag = "1"
+    }
+    { Copiar Menu
+      Text = ("Copiar")
+      Tag = "2"
+    }
+  }
+  { DirChooser1 DirChooser
+    MoveScaled(0,2,27,44)
+    ShowDetailed = True
+  }
+  { FileView1 FileView
+    MoveScaled(34,2,64,76)
+  }
+}

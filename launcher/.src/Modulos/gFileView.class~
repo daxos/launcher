@@ -1,0 +1,353 @@
+' Gambas class file
+
+' This program IS free software; you can redistribute it AND/OR
+' modify it under the terms of the GNU General PUBLIC License AS
+' published by the Free Software Foundation; either version 2 of the
+' License, OR (at your option) any later version.
+' 
+' This program IS distributed IN the hope that it will be useful, but
+' IS provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+' warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+' NON-INFRINGEMENT.  See the GNU General PUBLIC License FOR more details.
+' 
+' You should READ the GNU General PUBLIC License
+' IF you have non, WRITE TO the Free Software
+' Foundation, INC., 59 Temple Place - Suite 330, Boston,
+' # MA 02111-1307, USA.
+' ----------------------------------------------------------------------------
+' ################################################
+' # file name               : gFileView.class
+' # created in project      : ControlAula
+' # created by              : José L. Redrejo Rodríguez
+' # mail                    : jredrejo@edu.juntaextremadura.net
+' # created at              : 12/2/2006
+' # last test with          : gambas-1.9.46
+' ################################################
+
+'This component to work needs package libgnomevfs2-bin or kdelibs4c2a or kdelibs-bin
+Inherits UserControl
+Export
+
+Public Const _Properties As String = "*,Mode,Dir,ShowDetailed,ShowHidden,ShowDirectory"
+Public Const _DefaultEvent As String = "Click"
+
+Event {Select}
+Event MouseDown
+Event MouseUp
+Event Activate
+Event Menu
+Event Click
+Event Drop
+Event Drag
+Event Icon(Path As String)
+Event MenuItem(Item As String, Action As String)
+
+
+Property {Dir} As String
+Property ShowHidden As Boolean
+Property ShowDirectory As Boolean
+Property Current As String
+Property Icon As Picture
+Property Background As Integer
+Property Border As Integer
+Static Private $cExt As New Collection(gb.Text)
+
+Private $sDir As String
+Private $bShowHidden As Boolean
+Private $bShowDir As Boolean
+'PRIVATE $hIconView AS IconView
+Private $hIconView As ScrollView
+Private $iSort As Integer
+Private $bAsc As Boolean = True
+Private $hPict As Picture
+Private Currently As String
+
+Public Sub _free()
+  Destroy
+End
+
+Public Sub Destroy()
+    $cExt.Clear
+End
+
+Static Public Sub _init()
+
+  $cExt["png"] = "image"
+  $cExt["jpeg"] = "image"
+  $cExt["jpg"] = "image"
+  $cExt["xpm"] = "image"
+  $cExt["gif"] = "image"
+End
+
+Public Sub _new()
+
+ $hIconView = New ScrollView(Me) As "View"
+ $hIconView.drop = True
+
+End
+
+Public Sub RefreshView()
+
+  Dim sFile As String
+  Dim sDir As String
+  Dim hPictFile As Picture
+  Dim hPict As Picture
+  Dim sPrefix As String
+  Dim iSize As Integer
+'  Dim iconItem As GIconItem
+
+  'INC Application.Busy
+
+    hPictFile = Picture["icon:/32/file"]
+    iSize = 32
+    $hIconView.Width = Me.Width
+    $hIconView.Height = Me.Height
+
+  sDir = $sDir
+  If Not sDir Then sDir = User.Home
+
+  If $hIconView.Children.Count > 0 Then
+    For Each iconItem In $hIconView.Children
+       ' iconItem.Delete
+       iconitem.Visible = False
+    Next
+  Endif
+  Wait
+
+  For Each sFile In Dir(sDir, "*").Sort()
+    If Not $bShowHidden And If Left(sFile) = "." Or Right(sFile) = "~" Then Continue
+
+    With Stat(sDir &/ sFile)
+      If .type = gb.Link Then
+        If Stat(.link).Type = gb.Directory Then Continue
+      Endif
+      If .Type = gb.Directory Then
+        If Not $bShowDir Then Continue
+        sPrefix = "0"
+      Else
+        sPrefix = "1"
+      Endif
+      hPict = GetIcon(sDir &/ sFile, iSize)
+      If Not hPict Then hPict = hPictFile
+        IconItem = New GIconItem($hIconView) As "hItem"
+        IconItem.Text = sFile
+        IconItem.Icon = hPict
+        IconItem.h = 200
+    End With
+  Next
+ArrangeIcons()
+Finally
+
+ 'DEC Application.Busy
+End
+
+
+Private Function Dir_Read() As String
+
+  Return $sDir
+End
+
+Private Sub Dir_Write(sDir As String)
+
+  $sDir = sDir
+  RefreshView
+End
+
+Private Function ShowHidden_Read() As Boolean
+
+  Return $bShowHidden
+End
+
+Private Sub ShowHidden_Write(bShowHidden As Boolean)
+
+  $bShowHidden = bShowHidden
+  RefreshView
+End
+
+Private Function ShowDirectory_Read() As Boolean
+
+  Return $bShowDir
+End
+
+Private Sub ShowDirectory_Write(bShow As Boolean)
+
+  $bShowDir = bShow
+  RefreshView
+End
+
+Private Function GetView() As Object
+
+    Return $hIconView
+End
+
+
+Private Function Current_Read() As String
+
+  Return Currently
+End
+
+Private Function Background_Read() As Integer
+
+  Return $hIconView.Background
+End
+
+Private Sub Background_Write(color As Integer)
+
+  $hIconView.Background = color
+End
+
+Private Function Border_Read() As Integer
+
+  Return $hIconView.Border
+End
+
+Private Sub Border_Write(borderType As Integer)
+
+  $hIconView.Border = borderType
+End
+
+Private Sub Current_Write(sFile As String)
+Dim sKey As String
+
+ GetView().SelectAll(False)
+
+ sKey = "0" & sFile
+ If Not GetView().Exist(sKey) Then sKey = "1" & sFile
+ If Not GetView().Exist(sKey) Then Return
+
+ GetView()[sKey].Selected = True
+ GetView()[sKey].EnsureVisible
+End
+
+Public Sub View_Select()
+  Raise {Select}
+End
+
+Public Sub View_MouseDown()
+  Raise MouseDown
+End
+
+Public Sub View_MouseUp()
+  Raise MouseUp
+End
+
+Public Sub View_Activate()
+  Raise Activate
+End
+
+Public Sub View_Drag()
+  Raise Drag
+End
+
+Public Sub View_Drop()
+  Raise Drop
+End
+
+Public Sub View_Menu()
+  Raise Menu
+End
+
+Private Function GetIcon(sPath As String, iSize As Integer) As Picture
+Dim hImage As Image
+Dim sIcon As String
+Dim mimeType1 As String
+Dim mimeType2 As String
+Dim partsMime As String[]
+Dim commandMime As String
+Dim extension As String
+
+ $hPict = Null
+
+ Raise Icon(sPath)
+ If $hPict Then Return $hPict
+
+ extension = File.Ext(sPath)
+ If extension = "" Then Return $hPict
+ If $cExt.Exist(extension) Then
+    ' [GB2:ISTY] IF IsString($cExt[extension]) THEN
+    If TypeOf($cExt[extension]) = gb.String Then
+      If $cExt[extension] = "image" Then
+          Return Picture[sPath]
+      Else
+          Return Picture[$cExt[extension]]
+      Endif
+    Else
+      Return $cExt[extension]
+    Endif
+ Endif
+ If Exist("/usr/bin/gnomevfs-info") Then
+    Shell "gnomevfs-info \"" & sPath & "\" 2>/dev/null| grep MIME | cut -d \":\" -f 2 | sed s/\"^\"//" To commandMime
+ Else If Exist("/usr/bin/kfile") Then
+    Shell "kfile \"" & sPath & "\" 2>/dev/null| head -n 1|cut -d \"(\" -f 2|cut -d \")\" -f 1" To commandMime
+ Endif
+ commandMime = Trim(commandMime)
+ Shell "echo " & commandMime & "|cut -d \"/\" -f1" To mimeType1
+ Shell "echo " & commandMime & "|cut -d \"/\" -f2" To mimeType2
+ mimeType1 = Trim(mimeType1)
+ If mimeType1 <> "" Then
+    mimeType2 = Trim(mimeType2)
+    If mimeType1 = "image" Then
+      $cExt.Add("image", extension)
+      Return Picture[sPath]
+    Endif
+    If Left(mimeType2, 4) = "vnd." Then
+        sIcon = "/usr/share/icons/gnome/48x48/mimetypes/gnome-mime-application-" & mimeType2 & ".png"
+    Else
+        sIcon = "/usr/share/icons/gnome/48x48/mimetypes/gnome-mime-" & mimeType1 & "-" & mimeType2 & ".png"
+    Endif
+    If Exist(sIcon) Then
+        $cExt.Add(Picture[sIcon], extension)
+        Return $cExt[extension]
+    Endif
+ Endif
+ sIcon = ""
+ Try sIcon = $cExt[File.Ext(sPath)]
+ If sIcon Then Return Picture["img/" & CStr(iSize) &/ sIcon & ".png"]
+
+ Catch
+  Return Picture["img/" & iSize & "/image.png"]
+
+End
+
+
+Private Function Icon_Read() As Picture
+
+ Return $hPict
+End
+
+Private Sub Icon_Write(Value As Picture)
+
+ $hPict = Value
+End
+
+Public Sub ArrangeIcons()
+Dim hItem As Object
+Dim pX As Integer = 10
+Dim pY As Integer = 10
+  For Each hItem In $hIconView.Children
+    If hItem.visible Then
+      hItem.Move(pX, pY, 100, 120)
+      pX = pX + 110
+      If (pX + 110) > $hIconView.W Then
+        pX = 10
+        pY += 110
+      End If
+    Endif
+  Next
+
+End
+
+Public Sub hItem_click()
+  'PRINT LAST.text
+  currently = Last.text
+  Raise Click
+End
+
+Public Sub hItem_Drop()
+  Raise Drop
+End
+
+Public Sub hItem_MenuItem(Item As String, Action As String)
+  Raise MenuItem(Item, Action)
+End
+' Gambas class file

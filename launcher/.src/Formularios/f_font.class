@@ -1,0 +1,49 @@
+' Gambas class file
+
+Public Sub Button1_Click()
+
+  
+Dim ejecutar As String
+Dim aplication As String
+Dim info As String
+Dim categoria As String
+Dim deli As String
+
+deli = " : "
+categoria = " Office"
+aplication = TextArea1.Text
+
+ Shell "find /usr/share/applications/ -name *.desktop | xargs grep" & categoria & "| cut -d" & deli & "-f 1 | cut  -c 25-100" To info
+ Shell "cat /usr/share/applications/" & aplication & "| grep ^Exec= | cut -d= -f2" To ejecutar
+
+TextArea1.Text = [info, "categorias"]
+
+End
+
+
+
+Public Sub resolucionnuevo()
+    Dim x As String
+    Dim Resolucion As String[] = ["1280x1024", "1024x768", "800x600", "640x480", 
+                                  "1024x576", "1152x648", "1280x720", "1366x780", "1600x900", "1920x1080", "2560x1440", "3840x2160"]
+
+'Exec ["xrandr"] To x
+
+
+  For Each x In Resolucion
+    ComboBox1.Add(x)
+  Next 
+ 
+End
+
+Public Sub Button2_Click()
+
+   Shell "xrandr -s " & ComboBox1.Text
+
+End
+
+Public Sub Form_Open()
+
+  resolucionnuevo
+
+End

@@ -1,0 +1,11 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0.1429,0.1429,6.8571,6.8571)
+  ToolTip = ("Doble Click")
+  Picture = Picture["Imagenes/start.png"]
+  Mask = True
+  Border = False
+  Stacking = Window.Below
+  SkipTaskbar = True
+}

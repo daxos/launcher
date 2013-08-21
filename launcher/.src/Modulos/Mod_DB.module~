@@ -1,0 +1,36 @@
+' Gambas module file
+
+Private conector As Connection
+Public rs As Result
+'procedimiento para conectar la db
+Public Procedure conectar() As Connection
+  Dim rutaimagen As String
+  conector = New Connection
+  conector.Type = "sqlite3"
+  conector.Host = (Application.Path &/ ".src/DB/")
+  conector.Name = "DBLaunch.dat"
+   Try conector.Open()
+  Return conector
+  
+  If Error Then
+    Message.Error("Error en la Base de Datos")
+  conector = Null
+  End If
+  Catch 
+   
+  
+End
+
+Public Sub Main()
+                conectar() ' Ejecutamos el procedimiento conectar
+                f_fondo.Show ' hacemos visible nuestro formulario de acceso
+                Message("OK")
+              ' 
+End
+
+Public Sub desconectar(conector As Connection)
+
+    conector.Close
+    conector = Null
+
+End

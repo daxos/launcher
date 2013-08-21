@@ -1,0 +1,11 @@
+' Gambas class file
+
+
+
+Public Sub Button1_Click()
+  
+  'IconView1.Add("1", "Otros", Picture[rs!ima_otros])
+  
+IconView1.Add("D..", "..", Desktop.Windows)
+ 
+End

@@ -1,0 +1,69 @@
+' Gambas class file
+
+Private cx As Connection
+Private rs As Result
+
+Private pic As Picture
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+
+'f_fondo.Show
+Mod_Micro_Kernel.theme
+ 'f_fondo.Pic_Fondo.H = f_fondo.H
+ 'f_fondo.Pic_Fondo.W = f_fondo.w
+ 'f_fondo.Pic_Fondo.y = f_fondo.y
+ 'f_fondo.Pic_Fondo.x = f_fondo.x
+Me.TopOnly = Not Me.TopOnly
+End
+
+
+Public Sub T_Menu_Click()
+
+
+End
+
+Public Sub Form_Click()
+
+   f_taskbar.Refresh
+   f_taskbar.show
+   f_launcher.Show
+  'f_launcher.x = 100
+  'f_launcher.y = 100
+  Mod_Micro_Kernel.movimiento_taskbar_1
+  f_launcher.Show
+  Mod_Micro_Kernel.movimiento_menu_l
+
+    
+End
+
+Public Sub Form_DblClick()
+
+  f_taskbar.Delete
+  f_taskbar.Show
+  
+      
+  'f_launcher.x = 100
+  'f_launcher.y = 100
+  Mod_Micro_Kernel.movimiento_taskbar_1
+  f_launcher.Show
+  Mod_Micro_Kernel.movimiento_menu_l
+ 
+
+End
+
+Public Sub PictureBox1_MouseDow()
+
+f_taskbar.Refresh
+   f_taskbar.show
+   f_launcher.Show
+  'f_launcher.x = 100
+  'f_launcher.y = 100
+  Mod_Micro_Kernel.movimiento_taskbar_1
+  f_launcher.Show
+  Mod_Micro_Kernel.movimiento_menu_l
+
+End

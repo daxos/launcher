@@ -1,0 +1,54 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,42)
+  Background = &HFAFAFA&
+  Icon = Picture["system.png"]
+  Resizable = False
+  { Panel1 Panel
+    MoveScaled(0,0,64,11)
+    Background = &HDADADA&
+    { PictureBox1 PictureBox
+      MoveScaled(14,1,36,10)
+      Picture = Picture["Imagenes/daxos_logo_web.png"]
+      Stretch = True
+    }
+  }
+  { Panel2 Panel
+    MoveScaled(0,40,64,2)
+    Background = &HD8D8D8&
+  }
+  { TextLabel1 TextLabel
+    MoveScaled(1,13,62,7)
+    Background = &HFFE95F&
+    Text = ("Dax OS es un sistema operativo libre, basado en la distribución ubuntu, su objetivo es llegar a todos los usuarios tanto los experimentados como los nóveles.  ")
+  }
+  { Label1 Label
+    MoveScaled(22,23,13,4)
+    Font = Font["Ubuntu,+5"]
+    Background = &HB393FF&
+    Text = ("Versión:")
+  }
+  { Label2 Label
+    MoveScaled(35,23,7,4)
+    Font = Font["Ubuntu,+5"]
+    Background = &HB393FF&
+    Text = (" 2.0")
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(15,23,5,5)
+    Picture = Picture["system.png"]
+  }
+  { Label3 Label
+    MoveScaled(3,31,25,4)
+    Font = Font["Ubuntu,+4"]
+    Background = &H49FF56&
+    Text = ("Enlightenment 17")
+  }
+  { Label4 Label
+    MoveScaled(34,31,24,4)
+    Font = Font["Ubuntu,+4"]
+    Background = &H3C91FF&
+    Text = ("Andromeda x11")
+  }
+}

@@ -1,0 +1,715 @@
+' Gambas class file
+
+
+Public Sub Form_Open()
+
+ '   Dim i As Integer
+'IconViewCCPreferencias.Add("0", "Texto", Picture["/home/herberth/Launcher/Control_Center/Apariencia.png"])
+''IconViewCCPreferencias.Add("1", "Texto", Picture["/home/herberth/Launcher/Temas/EdulibreOs/Desarrollo.png"])
+Mod_Micro_Kernel.cc_andromeda
+Mod_Micro_Kernel.Llenar_Combo_CC_Tema
+Mod_Micro_Kernel.mostrar_thema_activo
+Mod_Micro_Kernel.Mostrar_Inf_Favoritos
+Mod_Micro_Kernel.sound_magnitud
+'Me.TopOnly = Not Me.TopOnly
+'Me.Resizable = False
+'IconViewCCPreferencias.Item
+End
+
+
+Public Sub IconPanelMenuCC_Click()
+
+  If IconPanelMenuCC.Text = "Apariencia" Then
+    IconViewCCPreferencias.Clear
+    Mod_Micro_Kernel.cc_andromeda
+    PanelPreferencias.Visible = True
+    Else
+      IconViewCCPreferencias.Clear
+      Mod_Micro_Kernel.cc_andromedasonido
+      
+  Endif
+
+End
+Public Sub ruta_tema()
+
+Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*", ("All files"), ("PNG"), "*.PNG", ("JPG"), "*.JPG"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfondo.Text = Dialog.Path
+'picfoto2.Picture = Picture.Load(Dialog.Path)
+
+End
+
+
+Public Sub ToolButton1_Click()
+
+
+
+
+End
+
+Public Sub ToolButton2_Click()
+
+Mod_Micro_Kernel.grabar_favoritos
+
+End
+
+Public Sub ToolButton4_Click()
+
+
+End
+
+Public Sub ToolButton5_Click()
+
+
+
+
+End
+
+Public Sub ToolButton6_Click()
+
+ 
+
+
+End
+
+Public Sub ToolButton7_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtinternet.Text = Dialog.Path
+picinternet.Picture = Picture.Load(Dialog.Path)
+
+
+End
+
+Public Sub ToolButton8_Click()
+
+ 
+
+
+End
+
+Public Sub ToolButton9_Click()
+
+  Me.Close
+  f_taskbar.Hide
+
+End
+
+Public Sub ToolButton10_Click()
+
+ 
+
+
+End
+
+Public Sub ToolButton11_Click()
+
+  
+
+
+End
+
+Public Sub ToolButton12_Click()
+
+ 
+
+
+End
+
+
+Public Sub ColorButton1_Change()
+
+  txtcolor_letra.Text = ColorButton1.Value
+  label16.Background = txtcolor_letra.Text
+End
+
+Public Sub ColorButton2_Change()
+
+  
+ txtcolor_fondo.Text = ColorButton2.Value
+  label17.Background = txtcolor_fondo.Text
+  
+End
+
+Public Sub ToolButton16_Click()
+
+   If Dialog.SelectFont() Then Return
+
+    ' esto mostrará el nombre de la fuente elegida dentro del botón
+'    txtnombre_font.Text = Dialog.Font.ToString()
+    txtnombre_font.Text = Dialog.Font.Name
+    ' esto mostrará el texto del botón con la fuente elegida
+    spintamano.Value = Dialog.Font.Size
+    
+    
+    If Dialog.Font.Bold Then
+    CheckNegrita.Value = True
+    Else
+    CheckNegrita.Value = False
+    Endif  
+
+
+End
+
+Public Sub txtotros_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtotros.Text = Dialog.Path
+picotros.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtaccesorios_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtaccesorios.Text = Dialog.Path
+picaccesorios.Picture = Picture.Load(Dialog.Path)
+
+
+End
+
+Public Sub txteducacion_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txteducacion.Text = Dialog.Path
+piceducacion.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtgraficos_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtgraficos.Text = Dialog.Path
+picgraficos.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtjuegos_KeyPress()
+
+  
+
+End
+
+Public Sub txtinternet_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtinternet.Text = Dialog.Path
+picinternet.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtjuegos_Click()
+
+    Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtjuegos.Text = Dialog.Path
+picjuegos.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtdesarrollo_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtdesarrollo.Text = Dialog.Path
+picdesarrollo.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtaudio_video_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtaudio_video.Text = Dialog.Path
+picaudio.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtsistema_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtsistema.Text = Dialog.Path
+picsistema.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtpreferencias_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtpreferencias.Text = Dialog.Path
+picpreferencias.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub ToolButton13_Click()
+
+  
+
+End
+
+Public Sub txtfondopanel_Click()
+
+Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfondopanel.Text = Dialog.Path
+Picfondopanel.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtfondo_Click()
+
+Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+ 
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfondo.Text = Dialog.Path
+picfondo.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub IconViewCCPreferencias_DblClick()
+
+   If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+
+      Case "0"
+      PanelPreferencias2.Visible = True
+      IconViewCCPreferencias.Visible = False
+    End Select
+  Endif
+  
+  If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+
+      Case "1"
+       Shell "~/.daxos/lockscreen/lockscreen.gambas"
+    End Select
+  Endif
+  
+  If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+
+      Case "2"
+       f_about.Show
+    End Select
+  Endif
+  
+  If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+  
+      Case "3"
+        If Dialog.OpenFile() Then Return
+  ' Approximation...
+     Shell "cp " & (Dialog.path) & " /usr/share/enlightenment/data/backgrounds/"
+     Shell "cp " & (Dialog.path) & " ~/.e/e/backgrounds/fondo.jpg"
+     Wait 2
+     Shell "convert ~/.e/e/backgrounds/fondo.jpg ~/.e/e/backgrounds/fondo.png"
+     Wait 10
+     Shell "enlightenment_remote -restart"
+    End Select
+    Endif
+    
+    If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+    
+    Case "4"
+      f_launcher.Show
+      Mod_Micro_Kernel.grabar_magnitud
+      Message.Info("El nivel de sonido subirá o disminuirá siguiendo x * " & f_launcher.TextBox4.Text)
+    End Select
+  Endif
+  
+  If Not IsNull(IconViewCCPreferencias.Current) Then
+    Select Case IconViewCCPreferencias.Current.Key
+  
+  Case "5"
+      Shell "gnome-alsamixer"
+    End Select
+  Endif
+  
+End
+
+Public Sub cmbtema_Click()
+
+  Mod_Micro_Kernel.Mostrar_Inf_Theme
+btnaceptar.Enabled = True
+CheckBox1.Value = True
+'If CheckBox1.Value = True Then
+'  CheckBox2.Value = False
+'  Else
+ '   CheckBox1.Value = True
+'Endif
+End
+
+Public Sub ColorButton3_Change()
+
+  
+  txtcolor_fondo_mus.Text = ColorButton3.Value
+  label21.Background = txtcolor_fondo_mus.Text
+
+End
+
+Public Sub Button3_Click()
+
+  PanelPreferencias2.Visible = False
+IconViewCCPreferencias.Visible = True
+End
+
+Public Sub btnaceptar_Click()
+
+  Mod_Micro_Kernel.Actualizar_Theme
+  Mod_Micro_Kernel.activar_thema
+  f_fondo.Refresh
+   btnaceptar.Enabled = False 
+   f_fondo.IconView1.Refresh
+   
+End
+
+
+
+Public Sub Label20_MouseDown()
+
+  
+
+End
+
+Public Sub txtraiz_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtraiz.Text = Dialog.Path
+picraiz.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txthome_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txthome.Text = Dialog.Path
+pichome.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtpapelera_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtpapelera.Text = Dialog.Path
+picpapelera.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtescritorio_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtescritorio.Text = Dialog.Path
+picescritorio.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtimagenes_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtimagenes.Text = Dialog.Path
+picimagenes.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtvideos_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtvideos.Text = Dialog.Path
+picvideos.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtmusica_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtmusica.Text = Dialog.Path
+picmusica.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtdescarga_Click()
+
+  Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtdescarga.Text = Dialog.Path
+picdescarga.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtfavoritos1_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfavoritos1.Text = Dialog.Path
+picfavoritos1.Picture = Picture.Load(Dialog.Path)
+
+
+End
+
+Public Sub txtfavoritos2_Click()
+
+     Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfavoritos2.Text = Dialog.Path
+picfavoritos2.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtfavoritos3_Click()
+
+     Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfavoritos3.Text = Dialog.Path
+picfavoritos3.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtfavoritos4_Click()
+
+     Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfavoritos4.Text = Dialog.Path
+picfavoritos4.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtfavoritos5_Click()
+
+     Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtfavoritos5.Text = Dialog.Path
+picfavoritos5.Picture = Picture.Load(Dialog.Path)
+
+End
+
+Public Sub txtcomandfav1_Click()
+
+Dialog.Title = "Ejectutables"
+Dialog.Filter = ["*.*", ("All files"), "*.*"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtcomandfav1.Text = Dialog.Path
+
+End
+
+Public Sub txtcomandfav2_Click()
+
+Dialog.Title = "Ejectutables"
+Dialog.Filter = ["*.*", ("All files"), "*.*"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtcomandfav2.Text = Dialog.Path
+
+End
+
+Public Sub txtcomandfav3_Click()
+
+Dialog.Title = "Ejectutables"
+Dialog.Filter = ["*.*", ("All files"), "*.*"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtcomandfav3.Text = Dialog.Path
+
+End
+
+Public Sub txtcomandfav4_Click()
+
+Dialog.Title = "Ejectutables"
+Dialog.Filter = ["*.*", ("All files"), "*.*"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtcomandfav4.Text = Dialog.Path
+
+End
+
+Public Sub txtcomandfav5_Click()
+
+Dialog.Title = "Ejectutables"
+Dialog.Filter = ["*.*", ("All files"), "*.*"]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtcomandfav5.Text = Dialog.Path
+
+End
+
+Public Sub txtoficina_Click()
+
+   Dialog.Title = "Archivo de Imagenes"
+Dialog.Filter = ["*.png", ("All files")]
+Dialog.Path = Application.Path 
+If Dialog.OpenFile() Then
+  Return 
+Endif
+
+txtoficina.Text = Dialog.Path
+Picoficina.Picture = Picture.Load(Dialog.Path)
+
+
+End
+

@@ -1,0 +1,92 @@
+' Gambas class file
+
+' This program IS free software; you can redistribute it AND/OR
+' modify it under the terms of the GNU General PUBLIC License AS
+' published by the Free Software Foundation; either version 2 of the
+' License, OR (at your option) any later version.
+' 
+' This program IS distributed IN the hope that it will be useful, but
+' IS provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+' warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+' NON-INFRINGEMENT.  See the GNU General PUBLIC License FOR more details.
+' 
+' You should READ the GNU General PUBLIC License
+' IF you have non, WRITE TO the Free Software
+' Foundation, INC., 59 Temple Place - Suite 330, Boston,
+' # MA 02111-1307, USA.
+' ----------------------------------------------------------------------------
+' ################################################
+' # file name               : frmIconItem.class
+' # created in project      : ControlAula
+' # created by              : José L. Redrejo Rodríguez
+' # mail                    : jredrejo@edu.juntaextremadura.net
+' # created at              : 12/2/2006
+' # last test with          : gambas-1.9.46
+' ################################################
+
+
+Public Sub hDraw_MouseUp()
+mouseUpProcessing()
+End
+
+Public Sub hText_MouseUp()
+mouseUpProcessing()
+End
+
+Private Sub dropProcessing()
+Dim daddy As Object
+  daddy = Me.Parent
+  daddy.View_Drop()
+End
+
+Private Sub mouseUpProcessing()
+Dim daddy As Object
+  daddy = Me.Parent
+  daddy.View_Click()
+  hText.SELECT(0, Len(htext.Text))
+    
+End
+
+Public Sub hDraw_Drop()
+  dropProcessing()
+End
+
+Public Sub hText_Drop()
+  dropProcessing()
+End
+
+Public Sub hText_MouseDown()
+  If Mouse.Left Or Mouse.Right Then showMenu()
+End
+
+Public Sub hDraw_MouseDown()
+  If Mouse.Left Or Mouse.Right Then showMenu()
+End
+
+Public Sub mnuToDesktop_Click()
+  menuProcessing("toDesktop")
+End
+
+Public Sub mnuToHome_Click()
+  menuProcessing("toHome")
+End
+
+Public Sub mnuDelete_Click()
+  menuProcessing("delete")
+End
+
+Public Sub mnuWorkgroup_Click()
+  menuProcessing("workgroup")
+End
+Private Sub menuProcessing(action As String)
+ Dim daddy As Object
+  daddy = Me.Parent
+  daddy.View_MenuItem(hText.Text, action)
+End
+
+Private Sub showMenu()
+  'mnuNada2.Visible = Utils.isMonitorProfe
+  'mnuWorkgroup.Visible = Utils.isMonitorProfe
+  'mnuIcon.Popup
+End
+

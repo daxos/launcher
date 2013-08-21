@@ -1,0 +1,224 @@
+' Gambas class file
+
+Private Const MIME_TYPE As String = "text/x-gambas-dragndrop-example"
+Private $sPath As String
+
+Public Sub Form_Open()
+
+  'refrescar_click
+  Mod_Micro_Kernel.theme
+
+End
+
+Public Sub refrescar_click()
+  
+Dim sFile As String
+  Dim hPictDir As Picture
+  Dim hPictFile As Picture
+  Dim cDir As New String[]
+  Dim sName As String
+  
+  IconView1.Show
+  IconView1.Refresh
+  Mod_Micro_Kernel.theme
+  
+
+  Inc Application.Busy
+  
+  $sPath = "~/Escritorio"
+
+  Me.Title = Conv($sPath, System.Charset, Desktop.Charset)
+
+ ' IconView1.Clear
+  'ivwExplorer.Arrangement = IconView.Row
+
+  hPictDir = Picture["icon:/48/directory"]
+  hPictFile = Picture["icon:/48/file"]
+  
+
+  For Each sFile In Dir($sPath)
+
+
+    If IsDir($sPath &/ sFile) Then
+      cDir.Add("D" & sFile)
+    Else
+      cDir.Add("F" & sFile)
+    Endif
+
+  Next
+
+  cDir.Sort
+
+  For Each sFile In cDir
+
+    sName = Mid$(sFile, 2)
+
+    If Left$(sFile) = "D" Then
+      IconView1.Add(sFile, sName, hPictDir)
+    Else
+      IconView1.Add(sFile, sName, hPictFile)
+    Endif
+
+    'ivwExplorer.Item.Editable = TRUE
+
+Next
+
+Finally
+
+  Dec Application.busy
+
+  
+End
+
+
+Public Sub Form_Menu()
+menuPopup.Popup
+
+End
+
+Public Sub Preferencias_Click()
+
+f_launcher.Close
+f_config.show
+Mod_Micro_Kernel.movimiento_menu_config
+
+End
+
+Public Sub Carpeta_Click()
+Dim Valor As String
+
+Valor = InputBox("Nombre de la Carpeta", "Andromeda")
+Mkdir user.home &/ "Escritorio/" & Valor
+
+End
+
+
+Public Sub IconView1_DblClick()
+
+Dim a As String
+Dim b As String
+
+a = IconView1.Current.Text
+
+Shell "thunar ~/Escritorio/" & a 
+
+End
+
+
+Public Sub IconView1_Click()
+
+IconView1.Current.Rename
+
+End
+
+
+Public Sub Form_MouseDrag()
+
+ Dim hImage As Image
+
+  If Not Mouse.Left Then Return
+
+  With Form
+    If .FindAt(Mouse.X, Mouse.Y) Then Return
+    If Not .Key Then Return
+
+    hImage = New Image(32 + 8 + .Font.TextWidth(.Current.Text), 32, Color.Transparent)
+    Paint.Begin(hImage)
+      Try Paint.DrawImage(.Current.Picture.Image, 0, 0)
+      'Try Draw.Picture(.Current.Picture, 0, 0)
+      Paint.Font = .Font
+      Paint.Text(.Current.Text, 34, 0, hImage.Width, 32, Align.Left)
+      Paint.Fill
+    Paint.End  
+
+    Drag.Icon = hImage.Picture
+    hImage.Save("~/drag.png")
+    'Drag.Icon = .Current.Picture
+    .Drag(.Key, MIME_TYPE)
+  End With
+
+End
+
+Public Sub Form_Drag()
+
+  'DEBUG Drag.Type;; Drag.Format
+  If Drag.Type = Drag.Text Then
+    If Drag.Format = MIME_TYPE Then
+      Return
+    Endif
+  Endif
+
+  Stop Event
+
+End
+
+Public Sub Form_Drop()
+
+Dim a As String
+Dim valor As String
+
+a = Drag.data
+ a = RTrim(a)
+   a = Replace$(a, "%20", " ")
+  a = Replace$(a, "%C3%A1", "á")
+  a = Replace$(a, "%C3%A9", "é")
+  a = Replace$(a, "%C3%AD", "í")
+  a = Replace$(a, "%C3%B3", "ó")
+  a = Replace$(a, "%C3%BA", "ú")
+  a = Replace$(a, "%C3%81", "Á")
+  a = Replace$(a, "%C3%89", "É")
+  a = Replace$(a, "%C3%8D", "Í")
+  a = Replace$(a, "%C3%93", "Ó")
+  a = Replace$(a, "%C3%9A", "Ú")
+  a = Replace$(a, "%C3%B1", "ñ")
+  a = Replace$(a, "%C3%91", "Ñ")
+  a = Replace$(a, "file://", "")
+  a = Replace$(a, "%5B", "[")
+  a = Replace$(a, "%5D", "]")
+  a = Replace$(a, " ", " ")
+
+  f_taskbar.IconViewindow.Remove(Drag.Data)
+  
+  If f_taskbar.IconViewindow.Count = 1 Then
+   valor = f_taskbar.iconviewindow.Count * 120
+   f_taskbar.Height = 50
+   Else
+   valor = f_taskbar.iconviewindow.Count * 65
+   f_taskbar.Width = valor
+   Endif
+   
+Shell "mv " & a & " ~/Escritorio" 
+refrescar_click
+
+End
+
+
+Public Sub Form_DragMove()
+
+  'DEBUG Drag.Type;; Drag.Format
+  If Drag.Type = Drag.Text Then
+    If Drag.Format = MIME_TYPE Then
+      Drag.Show(f_fondo)
+      Return
+    Endif
+  Endif
+
+  Stop Event  
+
+End
+
+Public Sub capturar_click()
+  
+Shell "scrot -d 2 desktop.jpeg" 
+
+End
+
+Public Sub Archivo_Click()
+  
+Dim Valor As String
+
+Valor = InputBox("Nombre del archivo", "Andromeda")
+Shell "touch ~/Escritorio/" & valor
+  
+End
+

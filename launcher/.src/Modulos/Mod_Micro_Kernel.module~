@@ -1,0 +1,483 @@
+' Gambas module file
+
+Private cx As Connection
+Private rs As Result
+Private rs_fav As Result
+'Public archivo_update As String = "http://edulibreos.com"
+
+Public Function menu_fondo_principal_01()
+
+ 
+ 
+ cx = Mod_DB.conectar()
+ rs = cx.Exec("select * from tb_theme ")
+'' f_fondo.pic_fondo.Picture = Picture[rs!ruta]
+ 
+ f_fondo.pic_fondo.Picture = Picture[rs!fondo_pantalla]
+ f_fondo.IconView1.Picture = Picture.load[rs!fondo_pantalla]
+ f_launcher.picbanner.Picture = Picture[rs!banner_superior]
+'f_fondo.Maximized = True
+'f_fondo.Center
+  
+  ''NO BORRAR BUEN CODIGO
+  'Fmain.dwgImage.Width = pic.Width     ' si quieres ajustar el tamaño
+  'Fmain.dwgImage.Height = pic.Height   ' del DA al de la foto
+    
+ ' Draw.Begin(Fmain.dwgImage)
+ ' Draw.Picture(pic, 0, 0)
+ ' Draw.End()    
+  
+  
+End
+Public Sub movimiento_menu()
+ Dim f As Integer
+  Dim g As Integer
+  For f = 0 To 0 ' si fueran 10 objetos se cambia el 0 por el 10
+    For g = -62 To 2
+      f_menu.x = g ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      Wait (0.002)
+    Next
+  Next
+End
+Public Sub movimiento_menu_l()
+ Dim f As Integer
+  Dim g As Integer
+  'For f = -1 To 50 ' si fueran 10 objetos se cambia el 0 por el 10
+    For g = -550 To 1
+      f_launcher.y = g ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      f_launcher.x = 50 ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      Wait (0.001)
+   ' Next
+  Next
+End
+
+Public Sub movimiento_menu_config()
+ Dim f As Integer
+  Dim g As Integer
+  'For f = -1 To 50 ' si fueran 10 objetos se cambia el 0 por el 10
+    For g = -550 To 1
+      f_config.y = g ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      f_config.x = 50 ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      Wait (0.001)
+   ' Next
+  Next
+End
+Public Sub movimiento_taskbar()
+ Dim f As Integer
+  Dim g As Integer
+  For f = 0 To 0 ' si fueran 10 objetos se cambia el 0 por el 10
+    For g = -62 To 1000
+      f_taskbar.x = g ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      Wait (0.002)
+    Next
+  Next
+End
+Public Sub movimiento_taskbar_1()
+ Dim f As Integer
+  Dim g As Integer
+  'For f = -1 To 50 ' si fueran 10 objetos se cambia el 0 por el 10
+    For g = -550 To 550
+      f_taskbar.y = g ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      f_taskbar.x = 50 ' si quieres cambiar de arriba hacia abajo cambiar x por y
+      Wait (0.0000102)
+   ' Next
+  Next
+End
+
+Public Sub cc_andromeda()
+  
+   f_config.IconViewCCPreferencias.Add("0", "Apariencia", Picture[Application.Path &/ "Imagenes/preferencias.png"])
+   f_config.IconViewCCPreferencias.Add("1", "Screensaver", Picture[Application.Path &/ "Imagenes/bloquear.png"])
+   f_config.IconViewCCPreferencias.Add("2", "Pantalla Anunciadora", Picture[Application.Path &/ "Imagenes/anunciadora.png"])
+   f_config.IconViewCCPreferencias.Add("3", "Cambiar fondo de pantalla", Picture[Application.Path &/ "Imagenes/wallpaper.png"])
+End
+
+Public Sub cc_andromedasonido()
+  
+   f_config.IconViewCCPreferencias.Add("4", "Fix sonido", Picture[Application.Path &/ "Imagenes/preferencias.png"])
+   f_config.IconViewCCPreferencias.Add("5", "Gnome Alsa Mixer", Picture[Application.Path &/ "Imagenes/bloquear.png"])
+ 
+End
+
+Public Function theme()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+'CONFIGURACION DEL PANEL PRINCIPAL
+Try f_launcher.principal.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.panel2.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.buscar.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.IconViewCategorias.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.IconViewFavoritos.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.IconViewCategoriasSelect.Background = Val(rs!p_principal_color_fondo)
+Try f_launcher.principal.Foreground = Val(rs!p_principal_color_letra)
+Try f_launcher.principal.Font.Size = Val(rs!p_principal_font_size)
+Try f_launcher.principal.Font.Bold = (rs!p_principal_font_bold)
+
+'COLOR DEL PANEL MUSICAL
+Try f_launcher.PanelMusic.Background = Val(rs!p_music_color_fondo)
+
+'IMAGENES DEL FONDO DEL LAUNCHER Y BANER SUPERIOR
+ Try f_fondo.pic_fondo.Picture = Picture[rs!fondo_pantalla]
+ Try f_launcher.picbanner.Picture = Picture[rs!banner_superior]
+ 
+'IMAGENES DE LOS ICONOS DEL PANEL PRINCIPAL
+Try f_launcher.accesorios.Picture = Picture[rs!ima_accesorios]
+Try f_launcher.educacion.Picture = Picture[rs!ima_educacion]
+Try f_launcher.graficos.Picture = Picture[rs!ima_graficos]
+Try f_launcher.internet.Picture = Picture[rs!ima_internet]
+Try f_launcher.juegos.Picture = Picture[rs!ima_juegos]
+Try f_launcher.ofimatica.Picture = Picture[rs!ima_oficina]
+Try f_launcher.desarrollo.Picture = Picture[rs!ima_desarrollo]
+Try f_launcher.sonido.Picture = Picture[rs!ima_audio_video]
+Try f_launcher.sistema.Picture = Picture[rs!ima_sistema]
+Try f_launcher.preferencias.Picture = Picture[rs!ima_preferencias]
+Try f_launcher.otros.Picture = Picture[rs!ima_otros]
+
+'IMAGENES DE LOS ICONOS DEL PANEL LATERAL
+Try f_launcher.IconViewMenu.Add("0", "Raiz", Picture[rs!ico_pan_lateral_raiz])
+Try f_launcher.IconViewMenu.Add("1", "Home", Picture[rs!ico_pan_lateral_home])
+Try f_launcher.IconViewMenu.Add("2", "Papelera", Picture[rs!ico_pan_lateral_papelera])
+Try f_launcher.IconViewMenu.Add("3", "Escritorio", Picture[rs!ico_pan_lateral_escritorio])
+Try f_launcher.IconViewMenu.Add("4", "Imágenes", Picture[rs!ico_pan_lateral_imagenes])
+Try f_launcher.IconViewMenu.Add("5", "Vídeos", Picture[rs!ico_pan_lateral_video])
+Try f_launcher.IconViewMenu.Add("6", "Música", Picture[rs!ico_pan_lateral_musica])
+Try f_launcher.IconViewMenu.Add("7", "Descargas", Picture[rs!ico_pan_lateral_descargas])
+
+
+'IMAGENES DE LOS ICONOS DEL PANEL PRINCIPAL
+Try f_launcher.IconViewCategorias.Add("0", "Accesorios", Picture[rs!ima_accesorios])
+Try f_launcher.IconViewCategorias.Add("1", "Educacion", Picture[rs!ima_educacion])
+Try f_launcher.IconViewCategorias.Add("2", "Graficos", Picture[rs!ima_graficos])
+Try f_launcher.IconViewCategorias.Add("3", "Internet", Picture[rs!ima_internet])
+Try f_launcher.IconViewCategorias.Add("4", "Juegos", Picture[rs!ima_juegos])
+Try f_launcher.IconViewCategorias.Add("5", "Oficina", Picture[rs!ima_oficina])
+Try f_launcher.IconViewCategorias.Add("6", "Desarrollo", Picture[rs!ima_desarrollo])
+Try f_launcher.IconViewCategorias.Add("7", "Audio y Video", Picture[rs!ima_audio_video])
+Try f_launcher.IconViewCategorias.Add("8", "Sistema", Picture[rs!ima_sistema])
+Try f_launcher.IconViewCategorias.Add("9", "Preferencia", Picture[rs!ima_preferencias])
+Try f_launcher.IconViewCategorias.Add("10", "Otros", Picture[rs!ima_otros])
+
+'IMAGENES DE LOS ICONOS DEL PANEL FAVORITOS
+Try f_launcher.IconViewFavoritos.Add("0", rs_fav!text_fav_001, Picture[rs_fav!ima_fav_001])
+Try f_launcher.IconViewFavoritos.Add("1", rs_fav!text_fav_002, Picture[rs_fav!ima_fav_002])
+Try f_launcher.IconViewFavoritos.Add("2", rs_fav!text_fav_003, Picture[rs_fav!ima_fav_003])
+Try f_launcher.IconViewFavoritos.Add("3", rs_fav!text_fav_004, Picture[rs_fav!ima_fav_004])
+Try f_launcher.IconViewFavoritos.Add("4", rs_fav!text_fav_005, Picture[rs_fav!ima_fav_005])
+
+
+End
+
+
+Public Sub Llenar_Combo_CC_Tema()
+  cx = Mod_DB.conectar()
+  rs = cx.Exec("select theme from tb_theme order by theme") 
+
+Do While rs.Available 
+  f_config.cmbtema.Add(rs!theme) 
+  rs.MoveNext 
+Loop 
+
+End
+
+Public Sub mostrar_thema_activo()
+   cx = Mod_DB.conectar()
+
+  rs = cx.EXEC("select * from tb_theme where activo LIKE '-1'") 
+  f_config.label31.Text = rs!theme
+  f_config.label32.Text = rs!activo
+
+End
+
+Public Sub activar_thema()
+  Dim Consulta As String   
+  Dim qry As String   
+  Dim qry_favoritos As String   
+  
+  cx = Mod_DB.conectar()
+
+  rs = cx.Exec("SELECT * FROM tb_theme where theme LIKE '%'")
+  
+  f_config.lblid.Text = rs!id
+
+  consulta = "update tb_theme set activo = '" & (f_config.CheckBox2.Value) & "' where theme LIKE '%'"
+  rs = cx.Exec(consulta) 
+
+  qry = "update tb_theme set activo = '" & f_config.CheckBox1.Value & "' where tb_theme.theme Like '" & f_config.cmbtema.Text & "'"
+  rs = cx.Exec(qry) 
+  
+ 
+  
+End
+
+Public Sub grabar_favoritos()
+  Dim Consulta As String   
+  Dim qry As String   
+  Dim qry_favoritos As String   
+  
+  cx = Mod_DB.conectar()
+
+  
+  rs = cx.Exec("SELECT * FROM tb_favoritos")
+
+
+  qry_favoritos = "update tb_favoritos set ima_fav_001 = '" & f_config.txtfavoritos1.text & "', ima_fav_002 = '" & f_config.txtfavoritos2.text & "',ima_fav_003 = '" & f_config.txtfavoritos3.text & "',ima_fav_004 = '" & f_config.txtfavoritos4.text & "',ima_fav_005 = '" & f_config.txtfavoritos5.text & "',ejec_fav_001 = '" & f_config.txtcomandfav1.text & "',ejec_fav_002 = '" & f_config.txtcomandfav2.text & "',ejec_fav_003 = '" & f_config.txtcomandfav3.text & "',ejec_fav_004 = '" & f_config.txtcomandfav4.text & "',ejec_fav_005 = '" & f_config.txtcomandfav5.text & "',text_fav_001 = '" & f_config.txtnombfav1.text & "',text_fav_002 = '" & f_config.txtnombfav2.text & "',text_fav_003 = '" & f_config.txtnombfav3.text & "',text_fav_004 = '" & f_config.txtnombfav4.text & "', text_fav_005 = '" & f_config.txtnombfav5.text & "'"
+  rs = cx.Exec(qry_favoritos) 
+  Message.Info("Cambios Aplicados")
+End
+ 
+Public Sub Mostrar_Inf_Theme()
+
+cx = Mod_DB.conectar()
+rs = cx.Exec("SELECT * FROM tb_theme where theme LIKE '" & (f_config.cmbtema.Text) & "'")
+
+
+  '' FONDO DE PANTALLA, BANNER SUPERIOR, COLOR DEL PANEL DE MUSICA
+  f_config.txtfondo.Text = rs!fondo_pantalla
+  f_config.txtfondopanel.Text = rs!banner_superior
+  f_config.txtcolor_fondo_mus.Text = rs!p_music_color_fondo
+  
+  ''PANEL CATEGORIAS
+  f_config.txtaccesorios.Text = rs!ima_accesorios
+  f_config.txteducacion.Text = rs!ima_educacion
+  f_config.txtgraficos.Text = rs!ima_graficos
+  f_config.txtinternet.Text = rs!ima_internet
+  f_config.txtjuegos.Text = rs!ima_juegos
+  f_config.txtoficina.Text = rs!ima_oficina
+  f_config.txtdesarrollo.Text = rs!ima_desarrollo
+  f_config.txtaudio_video.Text = rs!ima_audio_video
+  f_config.txtsistema.Text = rs!ima_sistema
+  f_config.txtpreferencias.Text = rs!ima_preferencias
+  f_config.txtotros.Text = rs!ima_otros
+  f_config.txtcolor_letra.Text = rs!p_principal_color_letra
+  f_config.txtcolor_fondo.Text = rs!p_principal_color_fondo
+  f_config.txtnombre_font.Text = rs!p_principal_font_name
+  f_config.CheckNegrita.Value = rs!p_principal_font_bold
+  f_config.spintamano.Value = rs!p_principal_font_size
+      
+  f_config.Picaccesorios.Picture = Picture[rs!ima_accesorios]
+  f_config.Piceducacion.Picture = Picture[rs!ima_educacion]
+  f_config.Picgraficos.Picture = Picture[rs!ima_graficos]
+  f_config.Picinternet.Picture = Picture[rs!ima_internet]
+  f_config.Picjuegos.Picture = Picture[rs!ima_juegos]
+  f_config.Picoficina.Picture = Picture[rs!ima_oficina]
+  f_config.Picdesarrollo.Picture = Picture[rs!ima_desarrollo]
+  f_config.Picaudio.Picture = Picture[rs!ima_audio_video]
+  f_config.Picsistema.Picture = Picture[rs!ima_sistema]
+  f_config.Picpreferencias.Picture = Picture[rs!ima_preferencias]
+  f_config.Picotros.Picture = Picture[rs!ima_otros]
+  f_config.Picfondopanel.Picture = Picture[rs!banner_superior]
+  f_config.Picfondo.Picture = Picture[rs!fondo_pantalla]
+  
+  f_config.Label16.Background = f_config.txtcolor_letra.Text '[rs!p_principal_color_letra]
+  f_config.Label17.Background = f_config.txtcolor_fondo.Text '= rs!p_principal_color_fondo '[rs!p_principal_color_fondo]
+  f_config.Label21.Background = f_config.txtcolor_fondo_mus.Text '[rs!p_principal_color_letra]
+  
+   ''PANEL LATERAL
+   f_config.txtraiz.Text = rs!ico_pan_lateral_raiz
+   f_config.txthome.Text = rs!ico_pan_lateral_home
+   f_config.txtpapelera.Text = rs!ico_pan_lateral_papelera
+   f_config.txtescritorio.Text = rs!ico_pan_lateral_escritorio
+   f_config.txtimagenes.Text = rs!ico_pan_lateral_imagenes
+   f_config.txtvideos.Text = rs!ico_pan_lateral_video
+   f_config.txtmusica.Text = rs!ico_pan_lateral_musica
+   f_config.txtdescarga.Text = rs!ico_pan_lateral_descargas
+   
+   
+  f_config.Picraiz.Picture = Picture[rs!ico_pan_lateral_raiz]
+  f_config.Pichome.Picture = Picture[rs!ico_pan_lateral_home]
+  f_config.Picpapelera.Picture = Picture[rs!ico_pan_lateral_papelera]
+  f_config.Picescritorio.Picture = Picture[rs!ico_pan_lateral_escritorio]
+  f_config.Picimagenes.Picture = Picture[rs!ico_pan_lateral_imagenes]
+  f_config.Picvideos.Picture = Picture[rs!ico_pan_lateral_video]
+  f_config.Picmusica.Picture = Picture[rs!ico_pan_lateral_musica]
+  f_config.Picdescarga.Picture = Picture[rs!ico_pan_lateral_descargas]
+  
+  Catch
+  
+  End
+  Public Sub Mostrar_Inf_Favoritos()
+
+  cx = Mod_DB.conectar()
+  rs = cx.Exec("SELECT * FROM tb_favoritos")
+
+
+  ''FAVORITOS
+  
+  f_config.txtfavoritos1.Text = rs!ima_fav_001
+  f_config.txtfavoritos2.Text = rs!ima_fav_002
+  f_config.txtfavoritos3.Text = rs!ima_fav_003
+  f_config.txtfavoritos4.Text = rs!ima_fav_004
+  f_config.txtfavoritos5.Text = rs!ima_fav_005
+  
+  f_config.txtcomandfav1.Text = rs!ejec_fav_001
+  f_config.txtcomandfav2.Text = rs!ejec_fav_002
+  f_config.txtcomandfav3.Text = rs!ejec_fav_003
+  f_config.txtcomandfav4.Text = rs!ejec_fav_004
+  f_config.txtcomandfav5.Text = rs!ejec_fav_005
+  
+  f_config.txtnombfav1.Text = rs!text_fav_001
+  f_config.txtnombfav2.Text = rs!text_fav_002
+  f_config.txtnombfav3.Text = rs!text_fav_003
+  f_config.txtnombfav4.Text = rs!text_fav_004
+  f_config.txtnombfav5.Text = rs!text_fav_005
+  
+  f_config.Picfavoritos1.Picture = Picture[rs!ima_fav_001]
+  f_config.Picfavoritos2.Picture = Picture[rs!ima_fav_002]
+  f_config.Picfavoritos3.Picture = Picture[rs!ima_fav_003]
+  f_config.Picfavoritos4.Picture = Picture[rs!ima_fav_004]
+  f_config.Picfavoritos5.Picture = Picture[rs!ima_fav_005]
+
+  Catch
+  End
+  
+  Public Sub Actualizar_Theme()
+  Dim ejecutar As String
+
+  cx = Mod_DB.conectar() 
+  f_config.lblid.Text = rs!id
+  
+  ejecutar = "update tb_theme set fondo_pantalla = '" & f_config.txtfondo.Text & "', banner_superior = '" & f_config.txtfondopanel.Text & "', p_music_color_fondo = '" & f_config.txtcolor_fondo_mus.Text & "', ima_accesorios = '" & f_config.txtaccesorios.Text & "', ima_educacion = '" & f_config.txteducacion.Text & "', ima_graficos = '" & f_config.txtgraficos.Text & "', ima_internet = '" & f_config.txtinternet.Text & "', ima_juegos = '" & f_config.txtjuegos.Text & "', ima_oficina = '" & f_config.txtoficina.Text & "', ima_desarrollo = '" & f_config.txtdesarrollo.Text & "', ima_audio_video = '" & f_config.txtaudio_video.Text & "', ima_sistema = '" & f_config.txtsistema.Text & "' , ima_preferencias = '" & f_config.txtpreferencias.Text & "', ima_otros = '" & f_config.txtotros.Text & "', p_principal_color_letra = '" & f_config.txtcolor_letra.Text & "', p_principal_color_fondo = '" & f_config.txtcolor_fondo.Text & "', p_principal_font_name = '" & f_config.txtnombre_font.Text & "',p_principal_font_bold = '" & f_config.CheckNegrita.Value & "',p_principal_font_size = '" & f_config.spintamano.Text & "',ico_pan_lateral_raiz = '" & f_config.txtraiz.Text & "',ico_pan_lateral_home = '" & f_config.txthome.Text & "',ico_pan_lateral_papelera = '" & f_config.txtpapelera.Text & "',ico_pan_lateral_escritorio = '" & f_config.txtescritorio.Text & "',ico_pan_lateral_imagenes = '" & f_config.txtimagenes.Text & "',ico_pan_lateral_video = '" & f_config.txtvideos.Text & "',ico_pan_lateral_musica = '" & f_config.txtmusica.Text & "',ico_pan_lateral_descargas = '" & f_config.txtdescarga.Text & "' where tb_theme.id = " & f_config.lblid.Text
+  rs = cx.Exec(ejecutar)
+  Message.Info("Cambios Aplicados")
+  Catch
+  Message("Debe de seleccionar primer un tema")
+  End
+  
+  Public Sub sound_change()
+  
+  Dim consulta As String
+  
+ cx = Mod_DB.conectar()
+ consulta = "select * from tb_sound"
+ rs = cx.Exec(consulta)
+ f_launcher.Slider1.Value = rs!level
+ 
+End
+
+
+Public Sub grabar_sonido()
+
+  Dim consulta As String
+  Dim valor As String
+  
+  valor = f_launcher.Slider1.Value
+  cx = Mod_DB.conectar() 
+  
+  consulta = "update tb_sound set level = '" & valor & "' where tb_sound.id = " & 1 
+  rs = cx.Exec(consulta)
+
+End
+
+ Public Sub sound_magnitud()
+  
+  Dim consulta As String
+  
+ cx = Mod_DB.conectar()
+ consulta = "select * from tb_sound"
+ rs = cx.Exec(consulta)
+ f_launcher.TextBox4.text = rs!magnitud
+ 
+End
+
+Public Sub grabar_magnitud()
+
+  Dim consulta As String
+  Dim valor As String
+  Dim valor2 As String
+  Dim valor3 As String
+  
+  
+  valor = f_launcher.TextBox4.Text
+  valor2 = 3
+  valor3 = 30
+  cx = Mod_DB.conectar() 
+  
+  If valor = 30 Then
+  consulta = "update tb_sound set magnitud = '" & valor2 & "' where tb_sound.id = " & 1 
+  f_launcher.TextBox4.text = "3"
+   
+  Else
+    consulta = "update tb_sound set magnitud = '" & valor3 & "' where tb_sound.id = " & 1 
+    f_launcher.TextBox4.text = "30"
+  
+  
+  Endif
+  
+rs = cx.Exec(consulta)
+
+End
+
+Public Function social()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+Try f_launcher.IconViewMenu.Add("14", "Tuenti", Picture["Imagenes/tuenti.png"])
+Try f_launcher.IconViewMenu.Add("15", "Facebook", Picture["Imagenes/facebook.png"])
+Try f_launcher.IconViewMenu.Add("16", "Twitter", Picture["Imagenes/twitter.png"])
+Try f_launcher.IconViewMenu.Add("18", "Dropbox", Picture["Imagenes/dropbox2.png"])
+Try f_launcher.IconViewMenu.Add("35", "Mi IP", Picture["Imagenes/ip.png"])
+Try f_launcher.IconViewMenu.Add("31", "Youtube", Picture["Imagenes/youtube2.png"])
+
+
+
+End
+
+Public Function juegos()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+Try f_launcher.IconViewMenu.Add("19", "Solitario", Picture["Imagenes/solitario.png"])
+Try f_launcher.IconViewMenu.Add("20", "Blinkwang", Picture["Imagenes/pink.png"])
+Try f_launcher.IconViewMenu.Add("21", "Space", Picture["Imagenes/space.gif"])
+Try f_launcher.IconViewMenu.Add("32", "Pacman", Picture["Imagenes/pacman.png"])
+Try f_launcher.IconViewMenu.Add("33", "Breakit", Picture["Imagenes/breakit.png"])
+Try f_launcher.IconViewMenu.Add("22", "Más juegos...", Picture["Imagenes/game.png"])
+
+
+End
+
+Public Function graficos()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+Try f_launcher.IconViewMenu.Add("23", "Flickr", Picture["Imagenes/flickr.png"])
+
+End
+
+
+Public Function oficina()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+Try f_launcher.IconViewMenu.Add("24", "Zoho Docs", Picture["Imagenes/zoho.png"])
+
+
+End
+
+Public Function multimedia()
+
+cx = Mod_DB.conectar()
+'rs = cx.Exec("SELECT * FROM tb_theme")
+rs = cx.Exec("SELECT * FROM tb_theme where activo LIKE '-1' ")
+rs_fav = cx.Exec("SELECT * FROM tb_favoritos")
+
+Try f_launcher.IconViewMenu.Add("25", "Reproductor html5", Picture["Imagenes/rvideo.png"])
+Try f_launcher.IconViewMenu.Add("34", "Multipiano", Picture["Imagenes/piano.png"])
+
+End

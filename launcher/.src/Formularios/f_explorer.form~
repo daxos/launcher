@@ -1,0 +1,13 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,85.7143,85.7143)
+  AutoResize = True
+  { DirChooser1 DirChooser
+    MoveScaled(0,0,27,86)
+    ShowDetailed = True
+  }
+  { FileView1 FileView
+    MoveScaled(27,0,59,86)
+  }
+}

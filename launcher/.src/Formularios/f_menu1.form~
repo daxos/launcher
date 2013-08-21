@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,70,64)
+  { T_Menu ToolButton
+    MoveScaled(0,0,5,5)
+    Picture = Picture["Imagenes/Menu.png"]
+  }
+  { Panel1 Panel
+    MoveScaled(0,0,9,6)
+    Expand = True
+    Arrangement = Arrange.Fill
+    { T_Menu2 ToolButton
+      MoveScaled(0,0,5,5)
+      Picture = Picture["Imagenes/Menu.png"]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  { Button1 Button
+    MoveScaled(26,53,16,4)
+  }
+  { Frame1 Frame
+    MoveScaled(2,3,53,37)
+    { IconView1 IconView
+      MoveScaled(5,7,16,16)
+    }
+  }
+}

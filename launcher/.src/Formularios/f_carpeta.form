@@ -1,0 +1,52 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,69,36)
+  Background = &HF3F3F3&
+  Mask = True
+  Border = False
+  SkipTaskbar = True
+  AutoResize = True
+  { menuPopup Menu
+    Text = ("Menú Principal")
+    Visible = False
+    { directorio Menu
+      Text = ("Cambiar directorio")
+      Picture = Picture["icon:/32/directory"]
+    }
+    { nuevo Menu
+      Text = ("Nuevo")
+      Picture = Picture["icon:/32/add"]
+      { carpeta Menu
+        Text = ("Carpeta")
+        Picture = Picture["icon:/32/directory"]
+      }
+      { archivo Menu
+        Text = ("Archivo")
+        Picture = Picture["icon:/32/file"]
+      }
+    }
+    { refrescar Menu
+      Text = ("Refrescar")
+      Picture = Picture["icon:/32/refresh"]
+    }
+  }
+  { IconView1 IconView
+    MoveScaled(2,6,65,27)
+    Background = &HF2F2F2&
+    Border = False
+  }
+  { Separator1 Separator
+    MoveScaled(-2,3,74,3)
+  }
+  { Label1 Label
+    MoveScaled(6,0,12,4)
+    Font = Font["Ubuntu,+3"]
+    Text = ("Escritorio")
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(1,0,4,4)
+    Picture = Picture["Temas/EdulibreOs/Panel_Lateral/user-desktop.png"]
+    Stretch = True
+  }
+}

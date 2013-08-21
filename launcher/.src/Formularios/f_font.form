@@ -1,0 +1,18 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,101,59)
+  Resizable = False
+  { Button1 Button
+    MoveScaled(0,0,16,4)
+  }
+  { TextArea1 TextArea
+    MoveScaled(28,1,16,16)
+  }
+  { ComboBox1 ComboBox
+    MoveScaled(19,22,24,4)
+  }
+  { Button2 Button
+    MoveScaled(23,32,16,4)
+  }
+}

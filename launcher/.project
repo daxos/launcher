@@ -1,0 +1,27 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.2
+Title=Launcher
+Startup=ClsInicio
+Version=0.7.80
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.db
+Component=gb.db.sqlite3
+Component=gb.desktop
+Component=gb.settings
+Component=gb.qt4.webkit
+Component=gb.web
+TabSize=2
+Translate=1
+Language=es
+ControlPublic=1
+Maintainer=david
+Address=david@david-P4M900T-M2
+Url=http://www.daxos.org/
+License=General Public License
+PackageName=launcher-light-0.7.24
+Packager=1
+Systems=debian
+Menus=debian:"Window Managers"
+Groups=debian:"x11"

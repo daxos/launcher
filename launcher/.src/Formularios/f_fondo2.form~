@@ -1,0 +1,15 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,105,76)
+  Border = False
+  Padding = 1
+  { Panel2 Panel
+    MoveScaled(0,-1,105,77)
+    { PictureBox1 PictureBox
+      MoveScaled(0,0,106,78)
+      Picture = Picture["Imagenes/ladoa.png"]
+      Stretch = True
+    }
+  }
+}

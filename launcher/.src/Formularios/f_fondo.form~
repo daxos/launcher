@@ -1,0 +1,60 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Drop = True
+  Border = False
+  Maximized = True
+  SkipTaskbar = True
+  Arrangement = Arrange.Vertical
+  { menuPopup Menu
+    Text = ("Menu_Principal")
+    Visible = False
+    { Nuevo Menu
+      Text = ("Nuevo")
+      Picture = Picture["icon:/32/file"]
+      { Carpeta Menu
+        Text = ("Carpeta")
+        Picture = Picture["icon:/32/directory"]
+      }
+      { Archivo Menu
+        Text = ("Archivo")
+        Picture = Picture["icon:/32/file"]
+        Tag = "3"
+      }
+    }
+    { capturar Menu
+      Text = ("Capturar escritorio")
+      Picture = Picture["icon:/48/camera"]
+    }
+    { Preferencias Menu
+      Text = ("Preferencias del Escritorio")
+      Picture = Picture["icon:/32/desktop"]
+      Tag = "4"
+    }
+    { refrescar Menu
+      Text = ("Refrescar")
+      Picture = Picture["icon:/32/refresh"]
+    }
+  }
+  { Panel1 Panel
+    MoveScaled(2,0,34,38)
+    Expand = True
+    Arrangement = Arrange.Fill
+    { Pic_Fondo PictureBox
+      MoveScaled(0,0,10,8)
+      Picture = Picture["Imagenes/wallpaper.jpg"]
+      Stretch = True
+      Alignment = Align.Center
+    }
+    { !IconView1 IconView
+      MoveScaled(0,0,16,16)
+      #Public = True
+      Visible = False
+      Drop = True
+      Picture = Picture["Imagenes/wallpaper.jpg"]
+      IconLines = 6
+      Border = False
+    }
+  }
+}

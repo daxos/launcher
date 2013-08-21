@@ -1,0 +1,124 @@
+' Gambas class file
+
+Private $MX As Integer
+Private $MY As Integer
+Private Const MIME_TYPE As String = "text/x-gambas-dragndrop-example"
+Private $sPath As String
+
+Public Sub Form_Open()
+
+Dim sFile As String
+  Dim hPictDir As Picture
+  Dim hPictFile As Picture
+  Dim cDir As New String[]
+  Dim sName As String
+  
+  IconView1.Show
+  IconView1.Refresh
+  Mod_Micro_Kernel.theme
+  
+
+  Inc Application.Busy
+  
+  $sPath = "~/Escritorio"
+
+  Me.Title = Conv($sPath, System.Charset, Desktop.Charset)
+
+ ' IconView1.Clear
+  'ivwExplorer.Arrangement = IconView.Row
+
+  hPictDir = Picture["icon:/48/directory"]
+  hPictFile = Picture["icon:/48/file"]
+  
+
+  For Each sFile In Dir($sPath)
+
+
+    If IsDir($sPath &/ sFile) Then
+      cDir.Add("D" & sFile)
+    Else
+      cDir.Add("F" & sFile)
+    Endif
+
+  Next
+
+  cDir.Sort
+
+  For Each sFile In cDir
+
+    sName = Mid$(sFile, 2)
+
+    If Left$(sFile) = "D" Then
+      IconView1.Add(sFile, sName, hPictDir)
+    Else
+      IconView1.Add(sFile, sName, hPictFile)
+    Endif
+
+    'ivwExplorer.Item.Editable = TRUE
+
+ Next
+
+Finally
+
+  Dec Application.busy
+
+
+End
+
+Public Sub Form_MouseDown()
+
+  $MX = Mouse.ScreenX - Me.X
+  $MY = Mouse.ScreenY - Me.Y
+
+End
+' 
+Public Sub Form_MouseMove()
+
+  If Mouse.Left Then Me.Move(Mouse.ScreenX - $MX, Mouse.ScreenY - $MY)
+
+End
+
+Public Sub IconView1_Click()
+
+IconView1.Current.Rename
+
+End
+
+
+Public Sub IconView1_MouseDrag()
+
+ Dim hImage As Image
+
+  If Not Mouse.Left Then Return
+
+  With IconView1
+    If .FindAt(Mouse.X, Mouse.Y) Then Return
+    If Not .Key Then Return
+
+    hImage = New Image(32 + 8 + .Font.TextWidth(.Current.Text), 32, Color.Transparent)
+    Paint.Begin(hImage)
+      Try Paint.DrawImage(.Current.Picture.Image, 0, 0)
+      'Try Draw.Picture(.Current.Picture, 0, 0)
+      Paint.Font = .Font
+      Paint.Text(.Current.Text, 34, 0, hImage.Width, 32, Align.Left)
+      Paint.Fill
+    Paint.End  
+
+    Drag.Icon = hImage.Picture
+    hImage.Save("~/drag.png")
+    'Drag.Icon = .Current.Picture
+    .Drag(.Key, MIME_TYPE)
+  End With
+
+End
+
+Public Sub IconView1_DblClick()
+
+Dim a As String
+Dim b As String
+
+a = IconView1.Current.Text
+
+Shell "thunar ~/Escritorio/" & a 
+
+End

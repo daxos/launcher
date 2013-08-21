@@ -1,0 +1,17 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  { hDraw PictureBox
+    MoveScaled(0,0,14.1429,10)
+    Drop = True
+    Alignment = Align.Left
+  }
+  { hText TextArea
+    MoveScaled(0,10,14,6)
+    Drop = True
+    ReadOnly = True
+    Wrap = True
+    Border = False
+  }
+}

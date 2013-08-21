@@ -1,0 +1,989 @@
+' Gambas class file
+
+Private cx As Connection
+Private rs As Result
+
+Public Sub f_launcher_Open()
+  
+ ' Mod_Micro_Kernel.sound_magnitud
+  lblreloj.SetFocus
+  Label23.SetFocus
+
+End
+
+Public Sub Timer1_Timer()
+
+  Timer1.Delay = 1000
+
+lblreloj.Text = Format$(Now, "ddd ") & " " & Time(Hour(Now), Minute(Now), Second(Now)) 
+'lbldia.text = Format$(Now, "ddd ")
+
+End
+
+Public Sub buscaiconos()
+  Dim FicheroDesktop As Settings
+   Dim i As Integer
+
+
+
+ TextBox2.Text = GridView2[GridView2.Row, 1].Text
+  
+Try FicheroDesktop = New Settings("/usr/share/applications/" & TextBox2.Text & ".desktop") '("/usr/share/applications/Gambas3.desktop")
+Try f_launcher.TextBox3.Text = (FicheroDesktop["Desktop Entry/Icon", "Error Lectura"])
+ 
+End
+
+Public Sub Form_Open()
+
+Dim nombre As String
+Dim segundon As String
+Dim tercern As String
+
+
+f_launcher.Center()
+f_launcher.y = 220
+
+Shell "mocp"
+ Mod_Micro_Kernel.sound_change
+
+'Mod_Micro_Kernel.menu_fondo_principal
+Mod_Micro_Kernel.theme
+'Mod_Micro_Kernel.Home_Menu_Principal
+Timer1.Enabled = True
+
+'-----------------Valores Grid----------------------
+IconViewCategoriasSelect.Clear
+GridView2.rows.count = 500
+GridView2.Columns.count = 2
+GridView2.Rows.Height = 35
+'GridView1.Picture[0, 0] = Picture.load("gmail.png")
+IconViewCategoriasSelect.GridSize = 0
+IconViewCategoriasSelect.IconLines = 0
+'-------------------Fin-----------------------------
+Me.TopOnly = Not Me.TopOnly
+lblreloj.SetFocus
+Label23.SetFocus
+'Aplicaciones favoritos
+
+
+'Shell "cat ~/.launcher/.config | grep ^nombre= | cut -d= -f2" To nombre
+'Shell "cat ~/.launcher/.config | grep ^segundon= | cut -d= -f2" To segundon
+'Shell "cat ~/.launcher/.config | grep ^tercern= | cut -d= -f2" To tercern
+
+'Label12.text = nombre
+'Label14.Text = segundon
+'Label24.text = tercern
+'firefox.Picture = Picture.Load("~/.launcher/icono1.png")
+'DaxOSUpdate.Picture = Picture.Load("~/.launcher/icono2.png")
+'ToolButton22.Picture = Picture.Load("~/.launcher/icono3.png")
+End
+
+Public Sub inicio_Click()
+
+  principal.visible = True
+  Panel5.Visible = False
+  TextBox1.text = " Buscar"
+  IconViewMenu.Clear
+  Mod_Micro_Kernel.theme
+  buscar.hide
+  WebView1.Hide
+  WebView1.Stop
+  IconViewCategorias.UnselectAll
+  WebView1.Zoom = 1.0
+'Shell "mocp -p ~/varios/Launcher/sound/button-pressed.ogg"
+
+End
+
+Public Sub ToolButton9_Click()
+
+  Me.Close
+  f_taskbar.Hide
+
+End
+
+
+
+Public Sub GridView2_Change()
+buscaiconos
+'    Try lblcodigo.Text = tvwqry[tvwqry.row, 3].text
+'GridView2[GridView2.Row, 1].Text
+End
+
+Public Sub settingo_Click()
+
+  'Dim apagar As String
+ 
+'Exec ["gksu", "shutdown"] 
+
+
+'Mod_Micro_Kernel.movimiento_menu_config
+End
+
+Public Sub Button1_Click()
+
+    'Mod_Micro_Kernel.theme
+  Dim titulos As Boolean
+  
+  If Not IsNull(IconViewCategorias.Current) Then
+  Select Case IconViewCategorias.Current.Key
+
+
+ 
+  Case "0"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_utilidades(f_launcher.GridView2, titulos)
+End Select
+Endif
+End
+
+
+
+Public Sub CheckBox2_Click()
+
+If CheckBox2.Value = True Then
+  CheckBox2.text = "Activado"
+  Shell "dropbox start"
+  Else
+    CheckBox2.Text = "Desactivado"
+    Shell "dropbox stop"
+Endif
+
+End
+
+Public Sub Form_Drop()
+  
+Dim a As String
+Dim cadena As String
+Dim estado As String
+
+  a = Drag.Paste()
+  a = RTrim(a)
+  a = Replace$(a, "%20", " ")
+  a = Replace$(a, "%C3%A1", "á")
+  a = Replace$(a, "%C3%A9", "é")
+  a = Replace$(a, "%C3%AD", "í")
+  a = Replace$(a, "%C3%B3", "ó")
+  a = Replace$(a, "%C3%BA", "ú")
+  a = Replace$(a, "%C3%81", "Á")
+  a = Replace$(a, "%C3%89", "É")
+  a = Replace$(a, "%C3%8D", "Í")
+  a = Replace$(a, "%C3%93", "Ó")
+  a = Replace$(a, "%C3%9A", "Ú")
+  a = Replace$(a, "%C3%B1", "ñ")
+  a = Replace$(a, "%C3%91", "Ñ")
+  a = Replace$(a, "file://", "")
+  a = Replace$(a, "%5B", "[")
+  a = Replace$(a, "%5D", "]")
+  a = Replace$(a, " ", " ")
+  
+  Shell "dropbox status" To estado
+  
+  panel2.Show 
+  IconViewCategoriasSelect.Hide
+  principal.Hide
+  Wait
+  Shell "cp " & a & " ~/Dropbox/" 
+  
+End
+
+Public Sub GridView2_Click()
+  
+Dim ejecutar As String
+Dim aplication As String
+Dim delim As String
+Dim icono As String
+
+
+delim = "%"
+aplication = GridView2.current.Text
+
+Shell "cat /usr/share/applications/" & aplication & ".desktop | grep ^Exec= | cut -d= -f2 | cut -d " & delim & " -f 1 | sed 2d " To ejecutar
+Shell ejecutar
+Me.close
+f_taskbar.Hide
+'Shell "mocp -p ~/varios/Launcher/sound/button-pressed.ogg"
+
+End
+
+Public Sub IconViewMenu_Click()
+
+Dim activar As String
+
+   If Not IsNull(IconViewMenu.Current) Then
+    Select Case IconViewMenu.Current.Key
+    
+       Case "0"
+      Shell "thunar /"
+      Me.close
+      
+      Case "1"
+       Shell "thunar ~/"
+       Me.Close
+       
+      Case "2"
+         Shell "thunar trash:"
+         Me.Close
+         
+      Case "3"
+        Shell "thunar ~/Escritorio"
+         Me.Close
+         
+      Case "4"
+             Shell "thunar ~/Imágenes"
+             Me.Close
+             
+      Case "5"
+               Shell "thunar ~/Vídeos"
+               Me.close
+               
+     Case "6"
+       Shell "thunar ~/Música"
+       Me.close
+       
+     Case "7"
+       Shell "thunar ~/Descargas"
+       Me.close 
+       
+        
+       Case "14"
+       buscar.Visible = True
+       WebView1.Show
+       WebView1.Url = "http://m.tuenti.com/?m=Login"
+   
+       
+       Case "15"
+       buscar.Visible = True
+       WebView1.Show
+       WebView1.Url = "https://m.facebook.com"
+    
+       Case "16"
+       buscar.Visible = True
+       WebView1.Show
+       WebView1.Url = "https://mobile.twitter.com/login"
+    
+   
+   
+       Case "17"
+       buscar.Visible = True
+       WebView1.Show
+       WebView1.Url = "https://mail.google.com/mail/x/mog-/gp/?source=mog&shva=1"
+       ' WebView1.Url = "file:///home/david/prueba/tiempo/tiempo2/weather.html"
+   
+       Case "18"
+       buscar.Visible = True
+       WebView1.Show
+       WebView1.Url = "https://www.dropbox.com/m/"
+      
+       Case "19"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://pasjans-online.pl/"
+       IconViewCategoriasSelect.Hide
+       
+       Case "20"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://storypixel.com/lab/blinkwang/"
+       IconViewCategoriasSelect.Hide
+       
+       Case "21"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://dodger.remvst.com/"
+       IconViewCategoriasSelect.Hide
+       
+       Case "22"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       'f_fondo.Panel2.Hide
+       Shell "firefox -new-window http://daxos.org/store/categories.php?cat=GOnline"
+       Me.Close
+       
+        Case "23"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://m.flickr.com/#/home"
+       IconViewCategoriasSelect.Hide
+       
+        Case "24"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "https://m.zoho.com"
+       IconViewCategoriasSelect.Hide
+       
+        Case "25"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Reload
+       If Dialog.OpenFile() Then Return
+       
+       Shell "cp " & (Dialog.path) & " /tmp/movie.mp4"
+       WebView1.Reload
+       WebView1.Url = "file:///daxos/video.html"
+       IconViewMenu.UnselectAll
+       IconViewCategoriasSelect.Hide
+       
+         Case "26"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://ptyapp.com/clock"
+       IconViewCategoriasSelect.Hide
+       
+         Case "27"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "file:///home/david/prueba/tiempo/tiempo2/weather.html"
+       IconViewCategoriasSelect.Hide
+       
+        Case "31"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://www.youtube.com/"
+       IconViewCategoriasSelect.Hide
+       WebView1.Zoom = 0.7
+      activar = Message.Warning("Esta función está en fase beta, puede causar que el launcher se cierre")
+      If activar = 1 Then
+      WebSettings[WebSettings.PluginsEnabled] = True
+      Endif
+         
+      Case "32"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://pacman.platzh1rsch.ch/"
+       IconViewCategoriasSelect.Hide
+       WebView1.Zoom = 0.7
+       
+      Case "33"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://breakit.elitwork.com/"
+       IconViewCategoriasSelect.Hide
+       WebView1.Zoom = 0.7
+       
+       Case "34"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://www.multiplayerpiano.com/"
+       IconViewCategoriasSelect.Hide
+       WebView1.Zoom = 0.7
+       
+       Case "35"
+       buscar.Visible = True
+       IconViewCategoriasSelect.Hide     
+       WebView1.Show
+       WebView1.Url = "http://showmyip.herokuapp.com/"
+       IconViewCategoriasSelect.Hide
+       
+            
+    End Select
+ 
+  Endif
+f_taskbar.Hide
+
+End
+
+
+Public Sub IconViewCategoriasOld_Click()
+Dim titulos As Boolean
+   If Not IsNull(IconViewCategorias.Current) Then
+    Select Case IconViewCategorias.Current.Key
+
+
+  Case "0"
+GridView2.Clear
+Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 100
+GridView2.Columns.count = 2
+Mod_Categorias.leer_utilidades(f_launcher.GridView2, titulos)
+      
+      Case "1"
+GridView2.Clear
+Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_educacion(f_launcher.GridView2, titulos)
+
+  Case "2"
+    GridView2.Clear
+Panel5.show
+principal.Visible = True
+
+IconViewCategoriasSelect.Visible = True
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_graficos(f_launcher.GridView2, titulos)
+  
+  Case "3"
+    GridView2.Clear
+    Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_internet(f_launcher.GridView2, titulos)
+  
+  Case "4"
+    GridView2.Clear
+    Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_juegos(f_launcher.GridView2, titulos)
+
+
+  Case "5"
+    GridView2.Clear
+    Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_officina(f_launcher.GridView2, titulos)
+
+  Case "6"
+  GridView2.Clear  
+Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_desarrollo(f_launcher.GridView2, titulos)
+
+  Case "7"
+    GridView2.Clear
+    Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_audio_video(f_launcher.GridView2, titulos)
+
+
+    Case "8"
+      GridView2.Clear
+Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 200
+GridView2.Columns.count = 2
+Mod_Categorias.leer_sistema(f_launcher.GridView2, titulos)
+
+  Case "9"
+    GridView2.Clear
+  Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 100
+GridView2.Columns.count = 2
+Mod_Categorias.leer_setting(f_launcher.GridView2, titulos)
+
+  Case "10"
+    GridView2.Clear
+  Panel5.show
+principal.Visible = False
+
+If CheckBox1.value = -1 Then
+f_launcher.GridView2.Header = 1
+titulos = -1
+Else
+f_launcher.GridView2.Header = 0
+titulos = 0
+Endif
+GridView2.Visible = True
+
+GridView2.rows.count = 0
+GridView2.Columns.count = 0
+
+GridView2.rows.count = 50
+GridView2.Columns.count = 2
+Mod_Categorias.leer_otros(f_launcher.GridView2, titulos)
+
+    End Select
+  Endif
+  
+
+End
+
+Public Sub ToolButton5_Click()
+
+'Shell "mocp -p ~/varios/Launcher/sound/button-pressed.ogg"
+    'Mod_Micro_Kernel.movimiento_menu_config
+f_launcher.close
+f_config.show
+'Mod_Micro_Kernel.movimiento_menu_config
+f_taskbar.Hide
+'Shell "mocp -p ~/varios/Launcher/sound/window-slide.ogg"
+
+End
+
+Public Sub ToolButton2_Click()
+
+  'Me.Close
+ Shell "power.gambas"
+ Me.Close
+'Para reiniciar:
+'shutdown - r Now
+
+'reboot
+
+'y para apagar
+'shutdown - h Now
+
+'halt 
+'Shell "/etc/init.d/gdm Stop"
+'Shell "/etc/init.d/gdm restart"
+'Exec ["/etc/init.d/gdm Stop", "/etc/init.d/gdm restart"] Wait
+'Shell "shutdown - r Now"
+End
+
+
+
+Public Sub ejecutar_Click()
+
+Dim busqueda As String
+ busqueda = TextBox1.text
+ Shell busqueda
+Me.close
+
+End
+
+Public Sub google_Click()
+
+Dim busqueda As String
+ busqueda = TextBox1.text
+ Shell "firefox -new-window http://www.google.es/search?q=" & busqueda
+Me.close
+
+
+End
+
+Public Sub wikipedia_Click()
+
+Dim busqueda As String
+ busqueda = TextBox1.text
+ Shell "firefox -new-window http://es.wikipedia.org/wiki/" & busqueda
+ Me.close
+
+End
+
+Public Sub youtube_Click()
+
+Dim busqueda As String
+ busqueda = TextBox1.text
+ Shell "firefox -new-window http://www.youtube.com/results?search_query=" & busqueda
+Me.close
+
+End
+
+Public Sub duckduckgo_Click()
+
+Dim busqueda As String
+ busqueda = TextBox1.text
+ Shell "firefox -new-window http://duckduckgo.com/?q=" & busqueda & "&t=daxos"
+Me.close
+
+End
+
+Public Sub TextBox1_KeyPress()
+
+principal.Hide
+Panel5.Hide
+panel2.Hide
+buscar.Show
+WebView1.Hide
+
+
+
+End
+
+Public Sub addapp_Click()
+
+  If Dialog.OpenFile() Then Return
+  ' Approximation...
+     Shell "cp " & (Dialog.path) & " ~/Escritorio/"
+     Shell "cp " & (Dialog.path) & " ~/Desktop/"
+ 
+End
+
+Public Sub IconViewFavoritos_Click()
+
+Dim titulos As Boolean
+cx = Mod_DB.conectar()
+
+rs = cx.Exec("SELECT * FROM tb_favoritos")
+
+   If Not IsNull(IconViewFavoritos.Current) Then
+    Select Case IconViewFavoritos.Current.Key
+
+
+  Case "0"
+  Exec [(rs!ejec_fav_001)]
+  Me.Close
+  
+  Case "1"
+  Exec [(rs!ejec_fav_002)]
+  Me.Close
+  
+  Case "2"
+  Exec [(rs!ejec_fav_003)]
+  Me.Close
+  
+  Case "3"
+  Exec [(rs!ejec_fav_004)]
+  Me.Close
+  
+  Case "4"
+  Exec [(rs!ejec_fav_005)]
+  Me.Close
+  
+  End Select
+Endif
+
+f_taskbar.Hide
+
+End
+
+Public Sub IconViewCategoriasSelect_Click()
+
+Dim ejecutar As String
+Dim aplication As String
+Dim delim As String
+Dim icono As String
+
+
+delim = "%"
+aplication = IconViewCategoriasSelect.Current.Text
+
+Shell "cat /usr/share/applications/" & aplication & ".desktop | grep ^Exec= | cut -d= -f2 | cut -d " & delim & " -f 1 | sed 2d " To ejecutar
+Shell ejecutar
+Me.close
+f_taskbar.Hide
+
+
+End
+
+Public Sub IconViewCategorias_Click()
+
+  Dim titulos As Boolean
+  
+  Label23.SetFocus
+  
+  If Not IsNull(IconViewCategorias.Current) Then
+  Select Case IconViewCategorias.Current.Key
+ 
+  Case "0"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_utilidades(f_launcher.GridView2, titulos)
+      
+  Case "1"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_educacion(f_launcher.GridView2, titulos)
+
+  Case "2"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_graficos(f_launcher.GridView2, titulos)
+IconViewMenu.Clear
+Mod_Micro_Kernel.graficos
+  
+  Case "3"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_internet(f_launcher.GridView2, titulos)
+IconViewMenu.Clear
+Mod_Micro_Kernel.social
+
+  
+  Case "4"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_juegos(f_launcher.GridView2, titulos)
+IconViewMenu.Clear
+Mod_Micro_Kernel.juegos
+WebView1.Show
+
+  Case "5"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_officina(f_launcher.GridView2, titulos)
+IconViewMenu.Clear
+Mod_Micro_Kernel.oficina
+
+  Case "6"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_desarrollo(f_launcher.GridView2, titulos)
+
+  Case "7"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_audio_video(f_launcher.GridView2, titulos)
+IconViewMenu.Clear
+Mod_Micro_Kernel.multimedia
+
+
+    Case "8"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_sistema(f_launcher.GridView2, titulos)
+
+  Case "9"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_setting(f_launcher.GridView2, titulos)
+
+  Case "10"
+IconViewCategoriasSelect.Clear
+Panel5.show
+principal.Visible = False
+IconViewCategoriasSelect.Visible = True
+Mod_Categorias.leer_otros(f_launcher.GridView2, titulos)
+
+    End Select
+    'Shell "mocp -p ~/varios/Launcher/sound/button-pressed.ogg"
+  Endif
+    'Shell "mocp -p ~/varios/Launcher/sound/button-pressed.ogg"
+End
+
+Public Sub IconViewCategorias_MouseDrag()
+
+  'If Mouse.Left Then
+    'Drag.Icon = Last.Picture
+   ' Last.Drag(Last.Picture.Image)
+
+  'Endif
+
+
+End
+
+Public Sub Slider1_Change()
+
+
+Dim valor2 As String
+Dim ejecutar As String
+Dim valor As String
+
+ valor = Slider1.value * TextBox4.Text
+ Shell "amixer sset PCM " & valor
+Mod_Micro_Kernel.grabar_sonido
+
+End
+
+
+
+Public Sub ToolButton24_Click()
+
+  Shell "mocp -m -a $HOME/Música -p"
+
+End
+
+Public Sub unpaused_Click()
+
+Shell "mocp -m $HOME/Música -U"
+
+pause.Show
+unpaused.visible = False
+
+End
+
+
+
+Public Sub ToolButton1_Click()
+
+Shell "mocp -m $HOME/Música -f" 
+pause.Show
+unpaused.visible = False
+
+End
+
+Public Sub pause_Click()
+
+Shell "mocp -m $HOME/Música -P"
+
+unpaused.Show
+pause.Visible = False
+
+End
+
+Public Sub ToolButton23_Click()
+
+  Shell "mocp -m $HOME/Música -r"
+  pause.Show
+unpaused.visible = False
+
+End
+
+
+
+Public Sub lblreloj_MouseDown()
+
+buscar.Visible = True
+WebView1.Show
+WebView1.Url = "http://ptyapp.com/clock"
+IconViewCategoriasSelect.Hide
+principal.Visible = False
+
+End

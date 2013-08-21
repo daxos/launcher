@@ -1,0 +1,75 @@
+' Gambas class file
+
+Private $MX As Integer
+Private $MY As Integer
+Private $hMenu As Menu
+
+Public Sub Form_Menu()
+Menu_Principal.Popup
+
+End
+Public Sub Form_MouseDown()
+
+  $MX = Mouse.ScreenX - Me.X
+  $MY = Mouse.ScreenY - Me.Y
+
+End
+Public Sub Form_MouseMove()
+
+  If Mouse.Left Then Me.Move(Mouse.ScreenX - $MX, Mouse.ScreenY - $MY)
+
+End
+Public Sub Button1_Click()
+
+  'FileView1.Dir = "/home"
+Desktop.ScreenSaver.Activate
+End
+
+Public Sub Button2_Click()
+'Desktop.RootWindow
+  'Desktop.Resolution = Exec ["gksu", "800*600"]
+'Embedder1.Embed = desktop.OpenTerminal("/bin/bash") 
+'
+'Dim Punteros As Pointer[]
+'   Punteros = desktop.FindWindow("*")
+'   Embedder1.embed(Punteros[0])
+
+desktop.open("http://www.google.es")
+'desktop.open("/home/musica/cancion.mp3")  
+End
+
+Public Sub Button3_Click()
+
+  
+FileView1.Dir = ("/home/herberth/Descargas")
+End
+
+Public Sub Embedder1_Embed()
+
+ ' desktop.openterminal("/bin/bash") 
+
+End
+
+Public Sub FileView1_DblClick()
+
+   Desktop.Open(FileView1.Current)
+
+End
+
+Public Sub DirChooser1_Change()
+
+ 'FileView1.Dir = DirChooser1.FileView.Dir
+FileView1.Dir = DirChooser1.SelectedPath
+End
+
+Public Sub FileView1_Click()
+
+  
+
+End
+
+Public Sub Form_Open()
+
+  
+
+End

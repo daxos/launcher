@@ -1,0 +1,5 @@
+' Gambas class file
+
+'Static Public DISTRO As String = "Launcher EdulibreOs Linux" ' will be overridden by SETUP.CONF
+'Static Public VERSION As String = "0.1" ' will be overridden by SETUP.CONF
+'Public version_microkernel As String = "0.1"

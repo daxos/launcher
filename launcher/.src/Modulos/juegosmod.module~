@@ -1,0 +1,70 @@
+' Gambas module file
+
+
+Public Sub leer(rejilla As Gridview, titulos As Boolean)
+
+'rejilla: es el gridview donde se van a escribir los datos
+'titulos: 0: sin titulo, -1 titulo contiene la 1º fila
+
+
+Dim lineas As String[]
+Dim linea_procesada As String
+Dim columnas As String[]
+Dim a As Integer
+Dim c As Integer
+Dim cadena As String
+Dim portapapeles As String
+Dim finlinea As String
+Dim fincolumna As String
+Dim info As Integer
+Dim categoria As String
+Dim deli As String
+Dim aplicacion As String
+Dim ejecutar As String
+Dim punto As String
+Dim icono As String
+
+punto = "."
+deli = " : "
+categoria = "Game"
+finlinea = "\n" ' retorno de carro (separa las filas)
+fincolumna = "\t" 'tabulador (separa las colunas)
+
+
+
+Shell "find /usr/share/applications/*.desktop | xargs grep " & categoria & " | cut -d" & deli & "-f 1 | cut  -c 25-1000 | cut -d " & punto & " -f 1 | sort -u | sort" To portapapeles
+
+lineas = Split(portapapeles, finlinea)
+
+
+
+
+For a = 0 To lineas.count - 1
+linea_procesada = lineas[a]
+
+columnas = Split(linea_procesada, fincolumna)
+
+
+
+For c = 0 To columnas.count - 1
+If a = 0 And titulos = -1 Then
+rejilla.Columns[c].title = columnas[c]
+
+Else
+
+If titulos = 0 Then rejilla[a, 1].text = columnas[c]
+If titulos = -1 Then rejilla[a - 1, c].text = columnas[c]
+Endif
+
+rejilla[a, 0].Picture = Picture["images/games.png"]
+rejilla[a, 0].Alignment = Align.Center
+
+Next 'c
+
+
+Next 'a
+
+
+  
+End
+

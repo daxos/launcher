@@ -1,0 +1,25 @@
+' Gambas class file
+
+
+Public Sub Form_Menu()
+Menu_Principal.Popup
+
+End
+
+Public Sub FileView1_DblClick()
+
+   Desktop.Open(FileView1.Current)
+
+End
+
+Public Sub DirChooser1_Change()
+
+FileView1.Dir = DirChooser1.SelectedPath
+End
+
+
+Public Sub Form_Open()
+
+  Me.Center
+
+End

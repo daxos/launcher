@@ -1,0 +1,87 @@
+' Gambas class file
+
+Private Const MIME_TYPE As String = "text/x-gambas-dragndrop-example"
+
+Public Sub form_Open()
+
+GridView1_Click
+
+End
+
+Public Sub GridView1_Click()
+
+Dim valor As String
+Dim titulos As Boolean
+    
+  If CheckBox1.value = -1 Then
+f_taskbar.GridView1.Header = 1
+titulos = -1
+Else
+f_taskbar.GridView1.Header = 0
+titulos = 0
+Endif
+GridView1.Visible = False
+
+GridView1.rows.count = 0
+GridView1.Columns.count = 0
+
+GridView1.rows.count = 50
+GridView1.Columns.count = 2
+ventanas.leer(f_taskbar.GridView1, titulos)
+
+
+iconviewindow.Clear
+iconviewindow.Visible = True
+ventanas.leer(f_taskbar.GridView1, titulos)
+
+ valor = iconviewindow.Count * 65
+ f_taskbar.Width = valor
+
+End
+
+Public Sub iconviewindow_Click()
+  
+iconviewindow.Tooltip = iconviewindow.Current.Text
+
+End
+
+Public Sub iconviewindow_DblClick()
+  
+Dim ejecutar As String
+
+ejecutar = iconviewindow.Current.Text
+
+Shell "wmctrl -a " & ejecutar 
+
+f_launcher.Hide
+f_taskbar.Hide
+  
+End
+
+Public Sub iconviewindow_MouseDrag()
+
+ Dim hImage As Image
+
+  If Not Mouse.Left Then Return
+
+  With iconviewindow
+    If .FindAt(Mouse.X, Mouse.Y) Then Return
+    If Not .Key Then Return
+
+    hImage = New Image(32 + 8 + .Font.TextWidth(.Current.Text), 32, Color.Transparent)
+    Paint.Begin(hImage)
+      Try Paint.DrawImage(.Current.Picture.Image, 0, 0)
+      'Try Draw.Picture(.Current.Picture, 0, 0)
+      Paint.Font = .Font
+      Paint.Text(.Current.Text, 34, 0, hImage.Width, 32, Align.Left)
+      Paint.Fill
+    Paint.End  
+
+    Drag.Icon = hImage.Picture
+    hImage.Save("~/drag.png")
+    'Drag.Icon = .Current.Picture
+    .Drag(.Key, MIME_TYPE)
+  End With
+
+End
+

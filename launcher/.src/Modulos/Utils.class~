@@ -1,0 +1,424 @@
+' Gambas class file
+
+' Gambas class file
+
+' This program IS free software; you can redistribute it AND/OR
+' modify it under the terms of the GNU General PUBLIC License AS
+' published by the Free Software Foundation; either version 2 of the
+' License, OR (at your option) any later version.
+' 
+' This program IS distributed IN the hope that it will be useful, but
+' IS provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+' warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+' NON-INFRINGEMENT.  See the GNU General PUBLIC License FOR more details.
+' 
+' You should READ the GNU General PUBLIC License
+' IF you have non, WRITE TO the Free Software
+' Foundation, INC., 59 Temple Place - Suite 330, Boston,
+' # MA 02111-1307, USA.
+' ----------------------------------------------------------------------------
+' ################################################
+' # file name               : Utils.class
+' # created in project      : ControlAula
+' # created by              : José L. Redrejo Rodríguez
+' # mail                    : jredrejo@edu.juntaextremadura.net
+' # created at              : 11/21/2006
+' # last test with          : gambas-1.9.46
+' ################################################
+
+Static Private myIP As String
+Static Public ClassroomID As String
+Static Private ipTeacher As String
+Static Public inputBoxText As String
+Static Public Debugging As Boolean
+Static Public mouseKeyboardEnabled As Boolean
+Static Public messagesEnabled As Boolean = False
+Static Public asTeacher As Boolean = False
+Static Public receivedPing As Boolean = False
+'authorizedHosts: list of hosts that can order to this host:
+Static Public authorizedHosts As New String[]
+
+Static Public Function SystemShell(command As String) As String
+'this function should be replaced by SHELL command to Var,
+'but that format uses to fail under heavy loaded nfs filesystems
+Dim result As String
+Dim sTemp As String
+  sTemp = Temp()
+  Shell command & " > " & sTemp Wait
+  Try result = file.Load(sTemp)
+  Return Trim$(result)
+End
+
+Static Public Function removeSlashes(word As String) As String
+Dim bits1 As String[]
+Dim bits2 As String[]
+Dim result As String
+  bits1 = Split(word, "[")
+  bits2 = Split(bits1[1], "]")
+  If bits2.Count = 0 Then
+    result = bits1[0]
+  Else
+    result = bits2[0]
+  Endif
+  Return result
+End
+
+Static Public Function getMyIP() As String
+
+  If myIp = "" Then myIp = SystemShell("/sbin/ifconfig | grep Bcast | cut -f2 -d: | cut -f1 -d\" \"")
+  Return myIP
+End
+
+Static Public Function getMyMAC() As String
+
+  Return SystemShell("/sbin/ifconfig | grep Ethernet |head -1 | tr -s \" \" | cut -f5 -d\" \"")
+End
+
+Static Public Function getMyFullName() As String
+Dim result As String
+Dim bits As String[]
+Dim name As String
+Dim diff As Integer
+  'result = SystemShell("pinky -sf " & User.Name)
+  result = SystemShell("finger " & User.Name & " 2>/dev/null| grep Name:")
+  If result = "" And Exist("/usr/bin/finger.real") Then result = SystemShell("finger.real " & User.Name & " 2>/dev/null| grep Name:")
+  If result = "" Then Return user.Name
+  bits = Split(result, "\t")
+  name = bits[bits.Count - 1]
+  diff = Len(name) - Len("Name: ")
+  If diff < 1 Then Return user.Name
+  name = Right$(name, diff)
+  Return name
+End
+
+Static Public Function isRoot() As Boolean
+
+  Return (user.Name = "root")
+
+End
+
+Static Public Function getGateway() As String
+Dim valor As String
+    valor = SystemShell("/sbin/route -n| grep UG | tr -s \" \" | cut -f2 -d\" \"|uniq")
+    Return Trim(valor)
+End
+
+
+
+Static Public Function classroomName(name As String) As String
+'for a hostname following the classroomname-oXX criteria, returns the classroom name
+Dim datos As String[]
+Dim hostname As String
+Dim classname As String
+  If name = "" Then Return ""
+  datos = Split(Trim(name), ".")
+  hostname = Replace(datos[0], "_", "-")
+  datos = Split(hostname, "-")
+  classname = Trim$(datos[0])
+  '
+  Return classname
+End
+
+Static Public Function desktopNumber(name As String) As String
+'for a hostname following the classroomname-oXX criteria, returns the "XX"
+Dim datos As String[]
+Dim hostname As String
+Dim number As String
+Dim value As Integer
+  If name = "" Then Return ""
+  hostname = Replace(name, "_", "-")
+  datos = Split(hostname, "-")
+  If datos.Count > 1 Then
+     number = datos[1]
+  Else
+    Return ""
+  Endif
+  If LCase(number) = "pro" Then Return ""
+  If Len(number) = 3 Then number = Right(number, 2)
+  '
+  Try value = Val(number)
+  If Not IsNull(value) Then
+    If value > 0 Then Return number
+  Endif
+
+  Return ""
+End
+
+
+
+
+Static Public Function ipHosts(targets As String) As String[]
+Dim bits1 As String[]
+Dim bits2 As String[]
+Dim result As String[]
+Dim host As String
+  result = New String[]
+      bits1 = Split(targets, ",")
+      For Each host In bits1
+        bits2 = Split(host, "@")
+        result.Add(bits2[1])
+      Next
+  Return result
+End
+
+Static Public Function getDefaultPrinterData() As String[]
+Dim queue As String
+Dim n As Integer
+Dim bits As String[]
+Dim tmpCommand As String
+Dim tmpStr As String
+Dim resultado As String[]
+
+    resultado = New String[]
+
+    tmpCommand = Utils.SystemShell("foomatic-configure -s cups -Q|grep defaultqueue")
+    If tmpCommand <> "" Then
+            tmpStr = Split(tmpCommand, ">")[1]
+            queue = Split(tmpStr, "<")[0]
+            tmpCommand = Utils.SystemShell("foomatic-configure -s cups -Q")
+            n = InStr(tmpCommand, queue)
+            n = InStr(tmpCommand, queue, n + 1)
+            tmpStr = Right(tmpCommand, Len(tmpCommand) - n)
+            bits = Split(tmpStr, ">")
+            resultado.Add(queue)
+            resultado.Add(Split(bits[4], "<")[0]) 'driver
+            resultado.Add(Split(bits[2], "<")[0]) 'printer
+    Endif
+    'if there is no printer installed resultado.count=0
+    Return resultado
+End
+
+Static Public Function hasNetwork(host As String) As Boolean
+Dim proc As Process
+  If host = "" Then Return False
+  Try proc = Exec ["ping", "-c", "2", host, "-i", "0.3"] Wait
+  Return (proc.Value = 0)
+End
+
+
+
+Static Public Sub collectGarbage()
+  Shell "killall -9 bttrack.bittornado 2>/dev/null" Wait
+  Shell "killall -9 avahi-browse 2>/dev/null" Wait
+  Shell "killall -9 mini-httpd 2>/dev/null" Wait
+  Shell "killall -9 btlaunchmany.bittornado 2>/dev/null" Wait
+  Shell "killall -9 avahi-publish-service 2>/dev/null" Wait
+  Shell "killall -9 gobby 2>/dev/null" Wait
+  'SHELL "killall -9 x11vnc 2>/dev/null" WAIT
+  Shell "killall -9 xvncviewer 2>/dev/null" Wait
+  Shell "killall -9 x0rfbserver 2>/dev/null" Wait
+
+End
+
+Static Public Function isAlreadyRunning(anApp As String) As Boolean
+Dim result As String
+  result = Utils.SystemShell("ps -FU " & User.Name & "|grep " & anApp & "|grep -v grep")
+
+  Return (result <> "")
+
+End
+
+Static Public Function URLEncode(url As String) As String
+    Dim result As String
+    Dim strReturn As String
+    Dim lngCount As Integer
+    Dim code As Integer
+  
+    
+    If Trim$(url) <> "" Then
+        
+        strReturn = Conv$(url, "UTF-8", System.Charset)
+        result = ""
+        For lngCount = 1 To Len(strReturn)
+            code = Asc(Mid$(strReturn, lngCount, 1))
+            Select Case code
+                Case 36 To 90, 97 To 122
+                'CASE 46, 48 TO 57, 65 TO 90, 97 TO 122
+                    ' don't touch alphanumeric chars
+                    result = result & Chr$(code)
+                Case 32
+                    result = result & "%20"
+                Case Else
+                    If code < 16 Then
+                        result = result & "%0" & Hex$(code)
+                    Else
+                        result = result & "%" & Hex$(code)
+                    End If
+            End Select
+        Next ' lngCount
+        
+    End If
+    
+    Return result
+  
+End
+
+Static Public Function URLDecode(url As String) As String
+Dim result As String
+Dim strReturn As String
+Dim lngCount As Integer
+Dim lngTotal As Integer
+Dim character As String
+      
+    If Trim$(url) <> "" Then
+        
+        strReturn = Conv$(url, "UTF-8", System.Charset)
+        result = ""
+        lngTotal = Len(strReturn)
+        For lngCount = 1 To lngTotal
+            character = Mid$(strReturn, lngCount, 1)
+            If character = "%" Then
+                If (lngCount <= lngTotal) And ((lngCount + 1) <= lngTotal) Then
+                  result = result & Chr$(Val("&H" & Mid$(strReturn, lngCount + 1, 2)))
+                  lngCount = lngCount + 2
+                End If
+             Else
+                result = result & character
+            Endif
+        Next ' lngCount
+    End If
+    
+    Return result
+  
+End
+
+Static Public Sub addItemToFile(item As String, filename As String)
+Dim contents As String
+  If isItemInFile(item, filename) Then Return
+  contents = ""
+  If Exist(filename) Then Try contents = File.Load(filename)
+  contents = contents & Chr$(10) & item & Chr(10)
+  Try file.Save(filename, contents)
+End
+
+Static Public Function isItemInFile(item As String, filename As String) As Boolean
+Dim contents As String
+  If Not Exist(filename) Then Return False
+  contents = ""
+  Try contents = File.Load(filename)
+  Return (InStr(contents, Chr$(10) & item & Chr$(10)) > 0)
+      
+End
+
+Static Public Sub removeItemFromFile(item As String, filename As String)
+Dim contents As String
+Dim n As Integer
+  If Not Exist(filename) Then Return
+  If Not isItemInFile(item, filename) Then Return
+  contents = ""
+  Try contents = File.Load(filename)
+  n = InStr(contents, Chr$(10) & item & Chr$(10))
+  contents = Left(contents, n - 1) & Right(contents, Len(contents) - Len(item) - 1 - n)
+  Try file.Save(filename, contents)
+    
+End
+
+
+Static Public Function getWindowID(title As String) As Integer
+  Dim result1 As String
+  Dim result2 As String
+  Dim beginning As Integer
+  
+  result1 = SystemShell("xwininfo -name \"" & title & "\"| grep \"Window id\" ")
+  'result1=xwininfo: Window id: 0x3201eca "title"
+  If result1 = "" Then
+    Wait 2
+    result1 = SystemShell("xwininfo -name \"" & title & "\"| grep \"Window id\" ")
+  Endif
+  beginning = InStr(result1, "0x")
+
+  result2 = Mid$(result1, beginning + 2, 7)
+  'result2 = Mid$(result1, Len("xwininfo: Window id:  0x"), Len("3a00003"))
+  If Not IsNull(result2) Then
+     Return CInteger(Val("&H" & result2))
+  Else
+    Return 0
+  Endif
+
+End
+
+Static Public Sub disableKeyboardAndMouse()
+Dim modmap As String
+Dim n As Integer
+Dim clearKeys As String
+  modmap = ""
+  For n = 8 To 255
+    modmap = modmap & "keycode " & CStr(n) & " =  NoSymbol" & Chr$(10)
+  Next
+'
+  clearKeys = "clear Shift" & Chr$(10)
+  clearKeys = clearKeys & "clear Lock" & Chr$(10)
+  clearKeys = clearKeys & "clear Control" & Chr$(10)
+  clearKeys = clearKeys & "clear Mod1" & Chr$(10)
+  clearKeys = clearKeys & "clear Mod2" & Chr$(10)
+  clearKeys = clearKeys & "clear Mod3" & Chr$(10)
+  clearKeys = clearKeys & "clear Mod4" & Chr$(10)
+  clearKeys = clearKeys & "clear Mod5" & Chr$(10)
+ '
+  modmap = modmap & clearKeys
+  Try File.Save(user.Home & "/.null_modmap", modmap)
+  '
+  Try Kill user.Home & "/.current_modmap"
+  Shell "xmodmap -pke > " & user.Home & "/.current_modmap" Wait
+  Try modmap = file.Load(user.Home & "/.current_modmap")
+
+  modmap = modmap & clearKeys
+  modmap = modmap & "add    Shift   = Shift_L Shift_R" & Chr$(10)
+  modmap = modmap & "add    Lock    = Caps_Lock" & Chr$(10)
+  modmap = modmap & "add    Control = Control_L Control_R" & Chr$(10)
+  modmap = modmap & "add    Mod1    = Alt_L 0x007D 0x009C" & Chr$(10)
+  modmap = modmap & "add    Mod2    = Num_Lock" & Chr$(10)
+  modmap = modmap & "add    Mod4    = 0x007F 0x0080" & Chr$(10)
+  modmap = modmap & "add    Mod5    = Mode_switch ISO_Level3_Shift ISO_Level3_Shift" & Chr$(10)
+  Try File.Save(user.Home & "/.current_modmap", modmap)
+  '
+  Shell "xmodmap " & user.Home & "/.null_modmap" Wait
+  Shell "xmodmap -e \"pointer = 9 8 7 6 5 4 3 2 1  \""
+  Try Kill user.Home & "/.null_modmap"
+  mouseKeyboardEnabled = False
+  
+End
+
+Static Public Sub enableKeyboardAndMouse()
+  
+  Shell "xmodmap -e \"pointer = default \""
+  mouseKeyboardEnabled = True
+  If Not Exist(user.Home & "/.current_modmap") Then Return
+  Shell "xmodmap " & user.Home & "/.current_modmap" Wait
+  Try Kill user.Home & "/.current_modmap"
+
+End
+
+Static Public Function isThisKDE() As Boolean
+Dim result As String
+  Shell "echo $KDE_FULL_SESSION" To result
+  Return (Trim$(result) <> "")
+  
+End
+
+Static Public Function splitInBlocks(text As String, command As String, Optional junkSize As Integer = 225) As String
+Dim bits As String[]
+Dim count As Integer = 1
+Dim n As Integer
+Dim result As String
+Dim tmpResult As String
+
+  If Len(text) <= junkSize Then Return command & "=\"" & text & "\""
+  bits = Split(text, ",")
+  result = command & CStr(count) & "=\""
+  
+  For n = 0 To bits.Count - 1
+    tmpResult = tmpResult & bits[n] & ","
+    If Len(tmpResult) > junkSize Then
+      Inc Count
+      tmpResult = bits[n] & ","
+      result = Left$(result, Len(result) - 1) & "\" "
+      If n < bits.Count - 1 Then result = result & command & CStr(Count) & "=\"" & bits[n] & ","
+    Else
+      result = result & bits[n] & ","
+    Endif
+  
+  Next
+    result = Left$(result, Len(result) - 1) & "\""
+    Return result
+End

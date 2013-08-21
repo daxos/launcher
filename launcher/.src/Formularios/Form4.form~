@@ -1,0 +1,28 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,41,31)
+  Background = &H404040&
+  Border = False
+  { GridView1 GridView
+    MoveScaled(2,4,37,24)
+    Background = &HF0F0F0&
+    Foreground = &HFF00FF&
+    Mode = Select.Single
+    Grid = False
+  }
+  { CheckBox1 CheckBox
+    MoveScaled(1,23,2,3)
+    Visible = False
+    Text = ("CheckBox1")
+  }
+  { Label1 Label
+    MoveScaled(17,0,16,4)
+    Foreground = &HFFFFFF&
+    Text = ("VENTANAS")
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(13,0,4,4)
+    Picture = Picture["window.png"]
+  }
+}

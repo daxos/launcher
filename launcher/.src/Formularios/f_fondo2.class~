@@ -1,0 +1,65 @@
+' Gambas class file
+
+Public Sub _new()
+
+End
+
+Public Sub Form_Open()
+ Exec ["openbox"]
+Mod_Micro_Kernel.menu_fondo_principal
+ 'f_fondo.T_Menu.H = 1
+ 'f_fondo.T_Menu.W = 1
+ 'f_fondo.T_Menu.y = 5
+ 'f_fondo.T_Menu.x = 5
+ 
+'    f_menu.Action = 1
+
+End
+
+Public Sub Pic_Fondo_DblClick()
+
+    'f_menu.Show
+    'Mod_Micro_Kernel.movimiento_menu
+    'f_fondo.Pic_Fondo.Enabled = False
+   ' f_menu.Show
+  'Mod_Micro_Kernel.movimiento_menu
+  'Mod_Micro_Kernel.movimiento_menu
+End
+
+
+
+Public Sub T_Menu_Click()
+  'Message("RR")
+  'f_launcher.Show
+  'Mod_Micro_Kernel.movimiento_menu_l
+ f_menu.Show
+  'Mod_Micro_Kernel.movimiento_menu
+End
+
+Public Sub T_Menu_DragMove()
+
+ 
+
+End
+
+
+
+Public Sub T_Menu_Leave()
+
+  T_Menu.H = 48
+'Panel2.w = 60
+
+End
+
+Public Sub Pic_Fondo_MouseDown()
+
+
+
+End
+
+Public Sub Pic_Fondo_Leave()
+
+  
+    T_Menu.H = 60
+
+End

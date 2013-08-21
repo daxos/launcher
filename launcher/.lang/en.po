@@ -1,0 +1,416 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1
+msgid "Launcher"
+msgstr ""
+
+#: f_about.form:39
+msgid "Dax OS es un sistema operativo libre, basado en la distribución ubuntu, su objetivo es llegar a todos los usuarios tanto los experimentados como los nóveles.  "
+msgstr ""
+
+#: f_about.form:46
+msgid "Versión:"
+msgstr "&Version"
+
+#: f_about.form:53
+msgid " 2.0"
+msgstr ""
+
+#: f_about.form:65
+msgid "Enlightenment 17"
+msgstr ""
+
+#: f_about.form:72
+msgid "Andromeda x11"
+msgstr ""
+
+#: f_carpeta.form:24
+msgid "Menú Principal"
+msgstr "&Main Menu"
+
+#: f_carpeta.form:28
+msgid "Cambiar directorio"
+msgstr ""
+
+#: f_carpeta.form:33 f_fondo.form:28
+msgid "Nuevo"
+msgstr "&New"
+
+#: f_carpeta.form:37 f_fondo.form:32
+msgid "Carpeta"
+msgstr "&Folder"
+
+#: f_carpeta.form:42 f_fondo.form:37
+msgid "Archivo"
+msgstr "&File"
+
+#: f_carpeta.form:48 f_fondo.form:49
+msgid "Refrescar"
+msgstr "&Refresh"
+
+#: f_carpeta.form:66
+msgid "Escritorio"
+msgstr "&Desktop"
+
+#: f_clock.form:26
+msgid "central"
+msgstr ""
+
+#: f_clock.form:31
+msgid "Clock 1"
+msgstr ""
+
+#: f_clock.form:37
+msgid "Clock 2"
+msgstr ""
+
+#: f_clock.form:43
+msgid "Clock 3"
+msgstr ""
+
+#: f_clock.form:50
+msgid "Clock 4"
+msgstr ""
+
+#: f_clock.form:58
+msgid "Always on top"
+msgstr ""
+
+#: f_clock.form:63
+msgid "Show Window"
+msgstr ""
+
+#: f_clock.form:71
+msgid "About"
+msgstr ""
+
+#: f_clock.form:78
+msgid "Quit"
+msgstr ""
+
+#: f_config.form:144
+msgid "Ajustes"
+msgstr "&Settings"
+
+#: f_config.form:161
+msgid "Apariencia"
+msgstr ""
+
+#: f_config.form:186
+msgid "Panel Principal"
+msgstr ""
+
+#: f_config.form:216
+msgid "Negrita"
+msgstr ""
+
+#: f_config.form:228
+msgid "Imagen Accesorios"
+msgstr ""
+
+#: f_config.form:252
+msgid "Imagen Educacion"
+msgstr ""
+
+#: f_config.form:265
+msgid "Imagen Graficos"
+msgstr ""
+
+#: f_config.form:278
+msgid "Imagen Internet"
+msgstr ""
+
+#: f_config.form:291
+msgid "Imagen Juegos"
+msgstr ""
+
+#: f_config.form:304
+msgid "Imagen Oficina"
+msgstr ""
+
+#: f_config.form:317
+msgid "Imagen Desarrollo"
+msgstr ""
+
+#: f_config.form:330
+msgid "Imagen Audio_Video"
+msgstr ""
+
+#: f_config.form:343
+msgid "Imagen Sistema"
+msgstr ""
+
+#: f_config.form:356
+msgid "Imagen Preferencias"
+msgstr ""
+
+#: f_config.form:369
+msgid "Imagen Otros"
+msgstr ""
+
+#: f_config.form:375
+msgid "Color de la letra"
+msgstr ""
+
+#: f_config.form:381
+msgid "Color del panel"
+msgstr ""
+
+#: f_config.form:387
+msgid "Tipo de letra"
+msgstr ""
+
+#: f_config.form:393
+msgid "Tamaño"
+msgstr "&Size"
+
+#: f_config.form:482
+msgid "Fondo del panel superior"
+msgstr ""
+
+#: f_config.form:495
+msgid "Fondo del Panel"
+msgstr ""
+
+#: f_config.form:504
+msgid "Fondo del Pantalla"
+msgstr ""
+
+#: f_config.form:510
+msgid "Fondo de Pantalla"
+msgstr ""
+
+#: f_config.form:531
+msgid "Panel de Musica"
+msgstr ""
+
+#: f_config.form:543
+msgid "Color del panel de musica"
+msgstr ""
+
+#: f_config.form:556
+msgid "Panel Lateral"
+msgstr ""
+
+#: f_config.form:569
+msgid "Imagen Raiz"
+msgstr ""
+
+#: f_config.form:588
+msgid "Imagen Home"
+msgstr ""
+
+#: f_config.form:607
+msgid "Imagen Papelera"
+msgstr ""
+
+#: f_config.form:626
+msgid "Imagen Escritorio"
+msgstr ""
+
+#: f_config.form:645
+msgid "Imagen Imagenes"
+msgstr ""
+
+#: f_config.form:664
+msgid "Imagen Videos"
+msgstr ""
+
+#: f_config.form:683
+msgid "Imagen Musica"
+msgstr ""
+
+#: f_config.form:702
+msgid "Imagen Descarga"
+msgstr ""
+
+#: f_config.form:711
+msgid "Informacion del Tema"
+msgstr ""
+
+#: f_config.form:740
+msgid "Tema Actual:"
+msgstr ""
+
+#: f_config.form:745
+msgid "Agregar Tema"
+msgstr "&Add theme"
+
+#: f_config.form:749
+msgid "Panel Favoritos"
+msgstr ""
+
+#: f_config.form:762
+msgid "Imagen Favorito 1"
+msgstr ""
+
+#: f_config.form:774
+msgid "Imagen Favorito 2"
+msgstr ""
+
+#: f_config.form:793
+msgid "Imagen Favorito 3"
+msgstr ""
+
+#: f_config.form:812
+msgid "Imagen Favorito 4"
+msgstr ""
+
+#: f_config.form:831
+msgid "Imagen Favorito 5"
+msgstr ""
+
+#: f_config.form:856
+msgid "Comando 1 y Nombre"
+msgstr ""
+
+#: f_config.form:886
+msgid "Comando 2 y Nombre"
+msgstr ""
+
+#: f_config.form:892
+msgid "Comando 3 y Nombre"
+msgstr ""
+
+#: f_config.form:898
+msgid "Comando 4 y Nombre"
+msgstr ""
+
+#: f_config.form:904
+msgid "Comando 5 y Nombre"
+msgstr ""
+
+#: f_config.form:940
+msgid "Aplicar"
+msgstr "&Apply"
+
+#: f_config.form:953
+msgid "Nombre del Tema"
+msgstr "&Theme name"
+
+#: f_config.form:960
+msgid "&Aceptar"
+msgstr "&Accept"
+
+#: f_config.form:967
+msgid "&Cerrar"
+msgstr "&Close"
+
+#: f_config.class:44
+msgid "All files"
+msgstr ""
+
+#: f_config.class:44
+msgid "PNG"
+msgstr ""
+
+#: f_config.class:44
+msgid "JPG"
+msgstr ""
+
+#: f_fondo.form:24
+msgid "Menu_Principal"
+msgstr "&Main menu"
+
+#: f_fondo.form:44
+msgid "Capturar escritorio"
+msgstr "&Screenshot"
+
+#: f_fondo.form:54
+msgid "Preferencias del Escritorio"
+msgstr ""
+
+#: f_launcher.form:91
+msgid "Sube tus archivos a Dropbox"
+msgstr ""
+
+#: f_launcher.form:97
+msgid "Desactivado"
+msgstr ""
+
+#: f_launcher.form:131
+msgid "Favoritos"
+msgstr "&Favourites"
+
+#: f_launcher.form:137
+msgid "Categorias"
+msgstr "&Categories"
+
+#: f_launcher.form:182
+msgid "Menú"
+msgstr "&Menu"
+
+#: f_launcher.form:188
+msgid "CheckBox1"
+msgstr ""
+
+#: f_launcher.form:219
+msgid "Anterior"
+msgstr "&Previous"
+
+#: f_launcher.form:225
+msgid "Play"
+msgstr ""
+
+#: f_launcher.form:231
+msgid "Pause"
+msgstr ""
+
+#: f_launcher.form:243
+msgid "Unpaused"
+msgstr ""
+
+#: f_launcher.form:256
+msgid "Siguiente"
+msgstr "&Next"
+
+#: f_launcher.form:263
+msgid " Buscar"
+msgstr "&Search"
+
+#: f_launcher.form:287
+msgid "Expulsar bandeja CD-ROM"
+msgstr ""
+
+#: f_launcher.form:302
+msgid "Añadir aplicaciones al escritorio"
+msgstr ""
+
+#: f_launcher.form:310
+msgid "3"
+msgstr ""
+
+#: f_launcher.form:370
+msgid "Ejecutar Aplicación"
+msgstr "&Execute application"
+
+#: f_launcher.form:375
+msgid "Google"
+msgstr ""
+
+#: f_launcher.form:380
+msgid "Wikipedia"
+msgstr ""
+
+#: f_launcher.form:385
+msgid "Youtube"
+msgstr ""
+
+#: f_launcher.form:390
+msgid "Duck Duck Go"
+msgstr ""
+
+#: f_menu.form:7
+msgid "Doble Click"
+msgstr ""
+

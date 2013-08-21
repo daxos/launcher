@@ -1,0 +1,277 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,103,67)
+  Background = &HF0F0F0&
+  Border = False
+  Sticky = True
+  { GridView2 GridView
+    MoveScaled(17,10,84,56)
+    Visible = False
+    Background = &HF0F0F0&
+    Mode = Select.Single
+    Grid = False
+    Border = False
+  }
+  { Panel1 Panel
+    MoveScaled(-1,0,104,10)
+    Background = &H404040&
+    Expand = True
+    AutoResize = True
+    { PictureBox2 PictureBox
+      MoveScaled(59,-14,6.8571,6.8571)
+    }
+    { inicio ToolButton
+      MoveScaled(1,0,5,5)
+      Picture = Picture["home.png"]
+    }
+    { Timer1 #Timer
+      #MoveScaled(36,2)
+    }
+    { dia Label
+      MoveScaled(49,0,5,5)
+      Foreground = &HFFFFFF&
+    }
+    { esp ToolButton
+      MoveScaled(66,0,6,4)
+      Visible = False
+      Picture = Picture["ES.png"]
+    }
+    { en ToolButton
+      MoveScaled(74,0,5.7143,4)
+      Visible = False
+      Picture = Picture["200px-Bandera_del_Reino_Unido.png"]
+    }
+    { ToolButton9 ToolButton
+      MoveScaled(97,0,6,4)
+      Picture = Picture["close_icon.png"]
+    }
+    { Label23 Label
+      MoveScaled(6,1,7,4)
+      Font = Font["+3"]
+      Foreground = &HFFFFFF&
+      Text = ("Menú")
+    }
+    { cmdreloj Label
+      MoveScaled(53,1,11,3)
+      Foreground = &HFFFFFF&
+    }
+    { CheckBox1 CheckBox
+      MoveScaled(39,4,16,4)
+      Text = ("CheckBox1")
+    }
+  }
+  { Panel2 Panel
+    MoveScaled(0,5,16,63)
+    Background = &HE0E0E0&
+    { Raiz ToolButton
+      MoveScaled(1,2,4.5714,4.5714)
+      Picture = Picture["folder-system.png"]
+    }
+    { Label22 Label
+      MoveScaled(6,3,24,4)
+      Text = ("Raiz")
+    }
+    { Home ToolButton
+      MoveScaled(1,9,4.5714,4.5714)
+      Picture = Picture["user-home.png"]
+    }
+    { Label16 Label
+      MoveScaled(6,10,7,4)
+      Text = ("Home")
+    }
+    { Papelera ToolButton
+      MoveScaled(1,15,4.5714,4.5714)
+      Picture = Picture["user-trash.png"]
+    }
+    { Label17 Label
+      MoveScaled(6,16,24,4)
+      Text = ("Papelera")
+    }
+    { Separator2 Separator
+      MoveScaled(0,21,15,3)
+    }
+    { Escritorio ToolButton
+      MoveScaled(1,25,4.5714,4.5714)
+      Picture = Picture["user-desktop.png"]
+    }
+    { Label21 Label
+      MoveScaled(6,26,24,4)
+      Text = ("Escritorio")
+    }
+    { Imagenes ToolButton
+      MoveScaled(1,32,4.5714,4.5714)
+      Picture = Picture["folder-pictures.png"]
+    }
+    { Label20 Label
+      MoveScaled(6,33,24,4)
+      Text = ("Imágenes")
+    }
+    { Videos ToolButton
+      MoveScaled(1,39,4.5714,4.5714)
+      Picture = Picture["folder-videos.png"]
+    }
+    { Label19 Label
+      MoveScaled(6,40,7,4)
+      Text = ("Vídeos")
+    }
+    { Musica ToolButton
+      MoveScaled(1,46,4.5714,4.5714)
+      Picture = Picture["folder-music.png"]
+    }
+    { Label18 Label
+      MoveScaled(6,47,24,4)
+      Text = ("Música")
+    }
+    { Descargas ToolButton
+      MoveScaled(1,54,4.5714,4.5714)
+      Picture = Picture["folder-download.png"]
+    }
+    { Label6 Label
+      MoveScaled(6,55,24,4)
+      Text = ("Descargas")
+    }
+  }
+  { Separator1 Separator
+    MoveScaled(16,5,1,63)
+    Background = &HE0E0E0&
+  }
+  { principal Panel
+    MoveScaled(19,11,83,57)
+    Background = &HF0F0F0&
+    { Label8 Label
+      MoveScaled(1,1,14,4)
+      Font = Font["+3"]
+      Text = ("Categorias")
+    }
+    { Accesorios ToolButton
+      MoveScaled(5,8,6.8571,6.8571)
+      Picture = Picture["applications-accessories.png"]
+    }
+    { Juegos ToolButton
+      MoveScaled(20,8,6.8571,6.8571)
+      Picture = Picture["applications-games.png"]
+    }
+    { ofimatica ToolButton
+      MoveScaled(36,8,6.8571,6.8571)
+      Picture = Picture["applications-office.png"]
+    }
+    { internet ToolButton
+      MoveScaled(51,8,6.8571,6.8571)
+      Picture = Picture["applications-internet.png"]
+    }
+    { educacion ToolButton
+      MoveScaled(65,8,8,7)
+      Picture = Picture["applications-science.png"]
+    }
+    { Label9 Label
+      MoveScaled(4,17,10,3)
+      Text = ("Accesorios")
+      Alignment = Align.Center
+    }
+    { Label13 Label
+      MoveScaled(21,16,6,3)
+      Text = ("Juegos")
+    }
+    { Label26 Label
+      MoveScaled(35,16,9,3)
+      Text = ("Ofimática")
+    }
+    { Label27 Label
+      MoveScaled(51,16,8,3)
+      Text = ("Internet")
+    }
+    { Label29 Label
+      MoveScaled(65,16,12,3)
+      Text = ("Educación")
+    }
+    { sonido ToolButton
+      MoveScaled(6,24,6.8571,6.8571)
+      Picture = Picture["applications-multimedia.png"]
+    }
+    { desarrollo ToolButton
+      MoveScaled(21,24,6.8571,6.8571)
+      Picture = Picture["applications-development.png"]
+    }
+    { graficos ToolButton
+      MoveScaled(36,23,6.8571,6.8571)
+      Picture = Picture["applications-graphics.png"]
+    }
+    { sistema ToolButton
+      MoveScaled(51,23,6.8571,6.8571)
+      Picture = Picture["applications-system.png"]
+    }
+    { otros ToolButton
+      MoveScaled(66,23,6.8571,6.8571)
+      Picture = Picture["applications-other.png"]
+    }
+    { Label10 Label
+      MoveScaled(6,31,7,3)
+      Text = ("Sonido")
+    }
+    { Label31 Label
+      MoveScaled(20,31,10,3)
+      Text = ("Desarrollo")
+    }
+    { Label25 Label
+      MoveScaled(36,31,8,3)
+      Text = ("Gráficos")
+    }
+    { Label28 Label
+      MoveScaled(51,31,8,3)
+      Text = ("Sistema")
+      Alignment = Align.Center
+    }
+    { Label15 Label
+      MoveScaled(67,31,5,3)
+      Text = ("Otros")
+      Alignment = Align.Center
+    }
+    { Label11 Label
+      MoveScaled(1,36,12,4)
+      Font = Font["+3"]
+      Text = ("Favoritos")
+    }
+    { favoritos ToolButton
+      MoveScaled(14,36,4,4)
+      Picture = Picture["cambiar.png"]
+    }
+    { firefox ToolButton
+      MoveScaled(5,42,7,7)
+      Picture = Picture["firefox.png"]
+    }
+    { DaxOSUpdate ToolButton
+      MoveScaled(21,42,6.8571,6.8571)
+      Picture = Picture["system-software-installer.png"]
+    }
+    { ToolButton22 ToolButton
+      MoveScaled(38,42,6.8571,6.8571)
+      Picture = Picture["empathy.png"]
+    }
+    { ToolButton13 ToolButton
+      MoveScaled(62,41,12,9)
+      Picture = Picture["flecha-icono-lysan-consulting.png"]
+    }
+    { Label12 Label
+      MoveScaled(5,51,9,3)
+      Text = ("Firefox")
+    }
+    { Label14 Label
+      MoveScaled(17,51,18,3)
+      Text = ("EdulibreOS Update")
+    }
+    { Label24 Label
+      MoveScaled(38,51,10,3)
+      Text = ("Empathy")
+    }
+    { Label30 Label
+      MoveScaled(60,50,18,4)
+      Text = ("Todas aplicaciones")
+    }
+  }
+  { Panel5 Panel
+    MoveScaled(25,36,83,101)
+    Visible = False
+    Background = &HF0F0F0&
+  }
+}

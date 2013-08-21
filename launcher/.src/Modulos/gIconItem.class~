@@ -1,0 +1,115 @@
+' Gambas class file
+
+' This program IS free software; you can redistribute it AND/OR
+' modify it under the terms of the GNU General PUBLIC License AS
+' published by the Free Software Foundation; either version 2 of the
+' License, OR (at your option) any later version.
+' 
+' This program IS distributed IN the hope that it will be useful, but
+' IS provided AS IS, WITHOUT ANY WARRANTY; without even the implied
+' warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
+' NON-INFRINGEMENT.  See the GNU General PUBLIC License FOR more details.
+' 
+' You should READ the GNU General PUBLIC License
+' IF you have non, WRITE TO the Free Software
+' Foundation, INC., 59 Temple Place - Suite 330, Boston,
+' # MA 02111-1307, USA.
+' ----------------------------------------------------------------------------
+' ################################################
+' # file name               : gIconItem.class
+' # created in project      : ControlAula
+' # created by              : José L. Redrejo Rodríguez
+' # mail                    : jredrejo@edu.juntaextremadura.net
+' # created at              : 12/2/2006
+' # last test with          : gambas-1.9.46
+' ################################################
+
+Inherits UserControl
+Export
+
+Public Const _DefaultEvent As String = "Click"
+
+Event {Select}
+Event Click
+Event Drop
+Event MenuItem(Item As String, Action As String)
+Property Text As String
+Property Icon As Picture
+
+Private frmIconItem As FrmIconItem
+
+Private Function Icon_Read() As Picture
+
+ Return frmIconitem.hDraw.Picture
+End
+
+Private Sub Icon_Write(Value As Picture)
+Dim x As Integer
+Dim y As Integer
+Dim achuchar As Boolean
+  x = value.Width
+  y = value.Height
+
+  frmIconItem.hDraw.Stretch = False
+  If value.Height > 70 Or value.Width > 100 Then
+     If x > y Then
+       
+        y = 100 * y / x
+         x = 100
+     Else
+       
+        x = 70 * x / y
+         y = 70
+     Endif
+     frmIconItem.hDraw.Picture = value.Image.Stretch(x, y).Picture
+  Else
+    frmIconItem.hDraw.Picture = value
+  Endif
+End
+Private Function Text_Read() As String
+
+ Return frmIconItem.hText.Text
+End
+
+Private Sub Text_Write(Value As String)
+ frmIconItem.hText.Text = Value
+ frmIconItem.hText.ToolTip = value
+ frmIconItem.hDraw.ToolTip = value
+End
+
+Public Sub _new()
+  Me.Height = 110
+  Me.Width = 100
+  frmIconItem = New FrmIconItem(Me)
+  Object.Attach(frmIconItem, Me, "frmIconItem")
+End
+
+Public Sub _free()
+  
+  'frmIconItem.Delete
+  frmIconItem = Null
+  
+End
+
+Public Sub View_Click()
+
+  Raise Click
+End
+
+
+Public Sub View_Select()
+  Raise {Select}
+End
+
+Public Sub View_Drop()
+  
+  Raise Drop
+  
+End
+
+Public Sub View_MenuItem(Item As String, Action As String)
+    Raise MenuItem(Item, Action)
+End
+
+
+' Gambas class file
